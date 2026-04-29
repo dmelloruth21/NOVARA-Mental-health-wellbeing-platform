@@ -42,40 +42,50 @@ def main() -> None:
     print(f"  Started : {build_start.strftime('%Y-%m-%d %H:%M:%S')}")
     print("=" * 64)
 
-    # ── Step 1: Build processed document lists ────────────────────────────────
-    print("\n[1/4] Building empathy documents …")
-    empathy_docs = build_empathy_docs()
-
-    print("\n[2/4] Building knowledge documents …")
-    knowledge_docs = build_knowledge_docs()
-
-    # ── Step 2: Save JSONL outputs (Phase 2 requirement) ─────────────────────
-    print("\n[3/4] Saving processed JSONL records …")
-    save_jsonl(empathy_docs, PROCESSED_DIR / "empathy_documents.jsonl")
-    save_jsonl(knowledge_docs, PROCESSED_DIR / "knowledge_documents.jsonl")
-
     # ── Step 3: Embed and index into Chroma ───────────────────────────────────
-    print("\n[4/4] Indexing into Chroma …")
+    print("\n[3/4] Indexing into Chroma …")
     chroma_client = chromadb.PersistentClient(path=str(DB_PATH))
     embedding_function = get_embedding_function()
+    
+    import os
+    force_reindex = os.getenv("FORCE_REINDEX", "false").lower() == "true"
+    skip_if_populated = not force_reindex
 
     empathy_collection = rebuild_collection(
-        chroma_client, EMPATHY_COLLECTION_NAME, embedding_function
+        chroma_client, EMPATHY_COLLECTION_NAME, embedding_function,
+        skip_if_populated=skip_if_populated
     )
     knowledge_collection = rebuild_collection(
-        chroma_client, KNOWLEDGE_COLLECTION_NAME, embedding_function
+        chroma_client, KNOWLEDGE_COLLECTION_NAME, embedding_function,
+        skip_if_populated=skip_if_populated
     )
 
-    # Chroma expects `document` key (not `text`) for the documents list
-    # The src modules use `text` as the canonical field; remap here.
-    def _to_chroma(docs: list[dict]) -> list[dict]:
-        return [
-            {**d, "document": d["text"]}
-            for d in docs
-        ]
+    # Check if we can skip the expensive build steps
+    if skip_if_populated and empathy_collection.count() > 0 and knowledge_collection.count() > 0:
+        print("\n  ✅ Collections are already populated. Skipping heavy data processing.")
+    else:
+        # ── Step 1: Build processed document lists ────────────────────────────────
+        print("\n[1/4] Building empathy documents …")
+        empathy_docs = build_empathy_docs()
 
-    upsert_documents(empathy_collection, _to_chroma(empathy_docs))
-    upsert_documents(knowledge_collection, _to_chroma(knowledge_docs))
+        print("\n[2/4] Building knowledge documents …")
+        knowledge_docs = build_knowledge_docs()
+
+        # ── Step 2: Save JSONL outputs (Phase 2 requirement) ─────────────────────
+        print("\n[2.5/4] Saving processed JSONL records …")
+        save_jsonl(empathy_docs, PROCESSED_DIR / "empathy_documents.jsonl")
+        save_jsonl(knowledge_docs, PROCESSED_DIR / "knowledge_documents.jsonl")
+
+        # Chroma expects `document` key (not `text`) for the documents list
+        def _to_chroma(docs: list[dict]) -> list[dict]:
+            return [
+                {**d, "document": d["text"]}
+                for d in docs
+            ]
+
+        print("\n[4/4] Upserting documents …")
+        upsert_documents(empathy_collection, _to_chroma(empathy_docs))
+        upsert_documents(knowledge_collection, _to_chroma(knowledge_docs))
 
     # ── Summary ───────────────────────────────────────────────────────────────
     build_end = datetime.datetime.now()
@@ -83,8 +93,12 @@ def main() -> None:
 
     print("\n" + "=" * 64)
     print(f"  Build complete in {elapsed:.1f}s")
-    print(f"  Empathy documents  : {len(empathy_docs):,}")
-    print(f"  Knowledge documents: {len(knowledge_docs):,}")
+    if 'empathy_docs' in locals():
+        print(f"  Empathy documents  : {len(empathy_docs):,}")
+        print(f"  Knowledge documents: {len(knowledge_docs):,}")
+    else:
+        print(f"  Empathy documents  : {empathy_collection.count():,} (existing)")
+        print(f"  Knowledge documents: {knowledge_collection.count():,} (existing)")
     print(f"  Chroma DB path     : {DB_PATH}")
     print(f"  JSONL output dir   : {PROCESSED_DIR}")
     print(f"  Build version      : {BUILD_VERSION}")
