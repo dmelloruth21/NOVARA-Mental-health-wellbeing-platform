@@ -194,7 +194,7 @@ def chat_logic(user_message: str, history: list, user_profile=None, today=None) 
     try:
         response = _get_client().chat_completion(
             messages=messages,
-            max_tokens=100, # Short, friend-style replies only
+            max_tokens=250, # Reduced from 400 for 40% faster generation
             temperature=0.7,
         )
         ai_reply: str = " ".join(

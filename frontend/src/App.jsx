@@ -39,16 +39,24 @@ function ChatApp({ authToken }) {
   const [isTyping, setIsTyping] = useState(false);
   const [theme, setTheme] = useState('calm');
   const [sessionId, setSessionId] = useState(null);
-  
-  const chatEndRef = useRef(null);
+
+  const chatContainerRef = useRef(null);
 
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    }
   }, [messages, isTyping]);
 
+  // Set body theme class on change
   useEffect(() => {
     document.body.className = `theme-${theme}`;
   }, [theme]);
+
+  // Set initial theme class synchronously so CSS vars load right away
+  if (typeof document !== 'undefined' && !document.body.className) {
+    document.body.className = 'theme-calm';
+  }
 
   // Load initial session on mount
   useEffect(() => {
@@ -116,7 +124,7 @@ function ChatApp({ authToken }) {
     try {
       const response = await fetch('/chat', {
         method: 'POST',
-        headers: { 
+        headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${authToken}`
         },
@@ -127,7 +135,7 @@ function ChatApp({ authToken }) {
       if (data.session_id && data.session_id !== sessionId) {
         setSessionId(data.session_id);
       }
-      
+
       const botMsg = {
         role: 'bot',
         text: data.reply || "I'm sorry, I encountered an error. Please try again.",
@@ -142,29 +150,10 @@ function ChatApp({ authToken }) {
   };
 
   return (
-    <div className="app-wrapper" style={{ 
-      display: 'flex', 
-      justifyContent: 'center', 
-      alignItems: 'center', 
-      padding: '20px' 
-    }}>
-      <div className="chat-glass-card" style={{ 
-        width: '100%', 
-        maxWidth: '1200px', 
-        height: '92vh',
-        background: 'rgba(255, 250, 245, 0.85)',
-        backdropFilter: 'blur(30px)',
-        WebkitBackdropFilter: 'blur(30px)',
-        borderRadius: '32px',
-        border: '1px solid rgba(255, 255, 255, 0.5)',
-        boxShadow: '0 40px 100px -20px rgba(0, 0, 0, 0.1)',
-        display: 'flex',
-        flexDirection: 'column',
-        overflow: 'hidden',
-        position: 'relative'
-      }}>
+    <div className="app-wrapper">
+      <div className="chat-glass-card">
         <Header theme={theme} onSetTheme={setTheme} />
-        <main className="chat-container">
+        <main className="chat-container" ref={chatContainerRef}>
           {messages.length === 0 && (
             <WelcomeBanner onChipClick={(text) => handleSendMessage(text)} />
           )}
@@ -172,20 +161,20 @@ function ChatApp({ authToken }) {
             <MessageBubble key={i} item={msg} theme={theme} animate={i === messages.length - 1} />
           ))}
           {isTyping && <TypingIndicator theme={theme} />}
-          <div ref={chatEndRef} />
         </main>
         <footer className="input-area">
           <div className="input-pill">
             <span className="input-icon">😊</span>
             <input
               type="text"
+              id="chat-text-input"
               className="chat-input"
               placeholder="Type how you feel..."
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
             />
-            <button className="send-btn" onClick={() => handleSendMessage()} disabled={!inputText.trim() || isTyping}>
+            <button id="send-message-btn" className="send-btn" onClick={() => handleSendMessage()} disabled={!inputText.trim() || isTyping}>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="22" y1="2" x2="11" y2="13"></line>
                 <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>

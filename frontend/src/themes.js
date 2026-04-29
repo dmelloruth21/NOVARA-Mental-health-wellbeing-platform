@@ -3,10 +3,10 @@
 export const THEMES = {
   calm: {
     id: 'calm',
-    icon: '🎨',
+    icon: '🌅',
     name: 'Calm Light',
-    avatar: '😊',
-    status: 'here for you, always',
+    avatar: '👧',
+    status: 'here for you, always 💛',
   },
   happy: {
     id: 'happy',
