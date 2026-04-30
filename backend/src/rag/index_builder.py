@@ -71,7 +71,7 @@ def save_jsonl(records: list[dict], path: Path) -> None:
     with path.open("w", encoding="utf-8") as handle:
         for record in records:
             handle.write(json.dumps(record, ensure_ascii=True) + "\n")
-    print(f"  Saved {len(records):,} records → {path}")
+    print(f"  Saved {len(records):,} records -> {path}")
 
 
 def load_jsonl(path: Path) -> list[dict]:

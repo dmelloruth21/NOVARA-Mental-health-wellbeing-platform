@@ -179,11 +179,11 @@ def build_all() -> list[dict]:
     """Build and return all empathy documents from both sources."""
     print("  Building Reddit empathy documents …")
     reddit_docs = build_reddit_documents()
-    print(f"    → {len(reddit_docs):,} Reddit documents")
+    print(f"    -> {len(reddit_docs):,} Reddit documents")
 
     print("  Building EmpatheticDialogues documents …")
     ed_docs = build_empathetic_dialogues_documents()
-    print(f"    → {len(ed_docs):,} EmpatheticDialogues documents")
+    print(f"    -> {len(ed_docs):,} EmpatheticDialogues documents")
 
     return reddit_docs + ed_docs
 

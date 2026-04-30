@@ -55,5 +55,5 @@ def build_ui() -> gr.ChatInterface:
 def launch_ui() -> None:
     """Build and launch the Gradio UI."""
     ui = build_ui()
-    print("MyAlly is ready. Logs → rag_reference_logs.jsonl")
+    print("MyAlly is ready. Logs -> rag_reference_logs.jsonl")
     ui.launch(inbrowser=True)

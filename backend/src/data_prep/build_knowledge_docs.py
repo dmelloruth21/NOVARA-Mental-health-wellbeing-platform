@@ -114,7 +114,7 @@ def build_mhqa_documents() -> list[dict]:
 def build_all() -> list[dict]:
     print("  Building MHQA knowledge documents …")
     docs = build_mhqa_documents()
-    print(f"    → {len(docs):,} MHQA documents")
+    print(f"    -> {len(docs):,} MHQA documents")
     return docs
 
 
