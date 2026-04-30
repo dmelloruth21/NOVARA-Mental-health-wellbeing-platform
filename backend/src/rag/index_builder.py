@@ -26,16 +26,27 @@ def rebuild_collection(
     chroma_client: chromadb.ClientAPI,
     collection_name: str,
     embedding_function,
+    skip_if_populated: bool = False
 ) -> chromadb.Collection:
     """
     Delete a collection if it exists and recreate it.
-
-    Called when processing rules change (guide Section 8, Step 4).
+    If skip_if_populated is True, it will return the existing collection
+    if it already has documents, avoiding a full re-index.
     """
+    if skip_if_populated:
+        try:
+            col = chroma_client.get_collection(name=collection_name, embedding_function=embedding_function)
+            if col.count() > 0:
+                print(f"  ✨ Collection '{collection_name}' already populated ({col.count()} docs). Skipping rebuild.")
+                return col
+        except Exception:
+            pass
+
     try:
         chroma_client.delete_collection(collection_name)
     except Exception:
         pass
+        
     return chroma_client.get_or_create_collection(
         name=collection_name,
         embedding_function=embedding_function,
