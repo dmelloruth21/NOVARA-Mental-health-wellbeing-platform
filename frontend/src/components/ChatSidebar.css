@@ -1,0 +1,208 @@
+/* ── Sidebar container ───────────────────────── */
+.chat-sidebar {
+  width: 260px;
+  min-width: 260px;
+  background-color: #21242d;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* ── Logo ────────────────────────────────────── */
+.sidebar-logo {
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sidebar-mascot-logo {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));
+}
+
+.sidebar-logo-text {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: #a5d6a7;
+  letter-spacing: -0.5px;
+}
+
+/* ── Nav container ───────────────────────────── */
+.sidebar-nav {
+  flex: 1;
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow-y: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.sidebar-nav::-webkit-scrollbar { display: none; }
+
+/* ── Standard nav item ───────────────────────── */
+.sidebar-nav-item {
+  width: 100%;
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 10px 14px;
+  color: #9ca3af;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+  gap: 0;
+}
+
+.sidebar-nav-item .icon {
+  margin-right: 14px;
+  font-size: 1.05rem;
+  flex-shrink: 0;
+}
+
+.sidebar-nav-item:hover {
+  background-color: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+}
+
+.sidebar-nav-item.active {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  font-weight: 600;
+}
+
+/* ── Chat group (Chat With Nova + New Chat) ── */
+.sidebar-chat-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.sidebar-sub-section {
+  padding-left: 20px;
+  margin-top: 2px;
+  margin-bottom: 4px;
+}
+
+.sidebar-sub-item {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 9px 14px;
+  color: #d1d5db;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 500;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+  gap: 0;
+}
+
+.sidebar-sub-item .icon {
+  margin-right: 12px;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.sidebar-sub-item:hover {
+  background: rgba(255, 255, 255, 0.13);
+  color: #ffffff;
+}
+
+/* ── Wellness Corner dropdown ─────────────────── */
+.sidebar-dropdown-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Wellness button — icon+text left, arrow pushed right */
+.wellness-btn {
+  justify-content: flex-start !important;
+}
+
+.wellness-btn .dropdown-arrow {
+  margin-left: auto;
+  font-size: 0.65rem;
+  opacity: 0.45;
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+
+.wellness-btn.open .dropdown-arrow {
+  transform: rotate(180deg);
+}
+
+.sidebar-dropdown-list {
+  padding-left: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+.sidebar-dropdown-item {
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 8px 12px;
+  color: #6b7280;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.88rem;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.2s;
+}
+
+.sidebar-dropdown-item:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.sidebar-dropdown-item.active {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+  font-weight: 600;
+}
+
+/* ── Footer ──────────────────────────────────── */
+.sidebar-footer {
+  padding: 20px;
+}
+
+.sos-btn {
+  width: 100%;
+  background-color: #e91e63;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 20px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.sos-btn:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 16px rgba(233, 30, 99, 0.4);
+}

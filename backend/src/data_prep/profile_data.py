@@ -150,7 +150,7 @@ def profile_dataset(entry: dict) -> None:  # noqa: E731
 
 def main() -> None:
     print("=" * 68)
-    print("  MyAlly – Dataset Profiling Report")
+    print("  Novara – Dataset Profiling Report")
     print("  Section 6.1 of the Implementation Guide")
     print("=" * 68)
 

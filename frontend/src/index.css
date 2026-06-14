@@ -1,4 +1,4 @@
-/* index.css — MyAlly Design System */
+/* index.css — Novara Design System */
 
 *, *::before, *::after {
   box-sizing: border-box;
@@ -12,11 +12,10 @@ body {
   background: #fffaf9 !important;
   min-height: 100vh;
   margin: 0;
-  overflow: hidden;
 }
 
 html, body, #root {
-  height: 100%;
+  min-height: 100%;
   width: 100%;
 }
 

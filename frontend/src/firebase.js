@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, setPersistence, browserLocalPersistence } from "firebase/auth";
 
 // Firebase Configuration
 // Ensure you create a .env file in the frontend folder with these keys:
@@ -18,3 +18,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const googleProvider = new GoogleAuthProvider();
+
+// Persist auth across page reloads (survives sleep/wake cycles)
+setPersistence(auth, browserLocalPersistence)
+  .then(() => console.log("✅ Firebase auth persistence set to localStorage"))
+  .catch((error) => console.error("Auth persistence error:", error));

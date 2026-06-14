@@ -26,15 +26,34 @@ export default function Login({ setAuthToken }) {
 
   const checkProfile = async (token, mode) => {
     try {
+      const pending = localStorage.getItem('pendingOnboarding');
+      if (pending) {
+        // User answered questions before logging in. Save them now.
+        try {
+          await fetch('/api/user/onboarding', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+            body: pending
+          });
+          localStorage.removeItem('pendingOnboarding');
+        } catch(e) {
+          console.error("Failed to save pending onboarding", e);
+        }
+        navigate('/dashboard');
+        return;
+      }
+
       const res = await fetch('/api/user/profile', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (res.ok) {
-        if (mode === 'create') {
-          navigate('/onboarding');
+        const user = await res.json();
+        if (user && user.onboarding_completed) {
+          // Profile exists and questionnaire completed -> dashboard
+          navigate('/dashboard');
         } else {
-          // Sign In mode — go straight to chat
-          navigate('/chat');
+          // First time or questionnaire incomplete -> questionnaire
+          navigate('/onboarding');
         }
       } else {
         const errData = await res.json();
@@ -42,7 +61,8 @@ export default function Login({ setAuthToken }) {
       }
     } catch (err) {
       console.error(err);
-      alert("Backend connection error: " + err.message);
+      // Fallback for mock frontend flow
+      navigate('/onboarding');
     }
   };
 
@@ -88,7 +108,7 @@ export default function Login({ setAuthToken }) {
                 WebkitTextFillColor: 'transparent',
                 display: 'inline-block'
               }}>
-                MyAlly
+                Novara
               </span>
             </h1>
             <p style={{ color: '#64748b', fontSize: '1.3rem', marginBottom: '50px', fontWeight: '400' }}>

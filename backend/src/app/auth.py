@@ -51,7 +51,10 @@ if not firebase_admin._apps:
         print("⚠️ WARNING: No Firebase configuration found (Path or JSON)")
 
 security = HTTPBearer()
-
+# Every time you send a message, this code looks at your 
+# "Token" (the secret code from Firebase) and asks, 
+# "Is this person who they say they are?" If the token is invalid, it stops 
+# the request immediately.
 def get_current_user(
     credentials: HTTPAuthorizationCredentials = Depends(security)
 ):

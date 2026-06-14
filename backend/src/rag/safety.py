@@ -7,8 +7,10 @@ Two functions:
   check_pre_generation(message)  → (is_safe, reason)
   check_post_generation(reply)   → (is_safe, list_of_issues)
 
-Pre-generation is a fast gate before any retrieval or generation.
-Post-generation reviews the model's reply before it reaches the user.
+Pre-check: Before the AI even sees your message, the function 
+  check_pre_generation scans it for "crisis" words.
+Post-check: After the AI writes a reply, the function check_post_generation scans the 
+   bot's own words to make sure it didn't give unsafe medical advice.
 """
 
 from __future__ import annotations

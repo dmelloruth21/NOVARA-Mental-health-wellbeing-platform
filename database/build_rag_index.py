@@ -38,7 +38,7 @@ BUILD_VERSION = "2.0"
 def main() -> None:
     build_start = datetime.datetime.now()
     print("=" * 64)
-    print(f"  MyAlly – RAG Index Builder  (version {BUILD_VERSION})")
+    print(f"  Novara – RAG Index Builder  (version {BUILD_VERSION})")
     print(f"  Started : {build_start.strftime('%Y-%m-%d %H:%M:%S')}")
     print("=" * 64)
 

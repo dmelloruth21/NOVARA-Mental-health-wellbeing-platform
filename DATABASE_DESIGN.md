@@ -1,4 +1,4 @@
-# MyAlly Database Design
+# Novara Database Design
 
 ## 📊 Database Schema Overview
 
@@ -119,12 +119,12 @@ WHERE id = 'session_uuid';
 
 ### PostgreSQL (Production)
 ```env
-POSTGRES_URL="postgresql://username:password@host:5432/myally_db"
+POSTGRES_URL="postgresql://username:password@host:5432/novara_db"
 ```
 
 ### SQLite (Local Development)
 ```env
-POSTGRES_URL="sqlite:///./myally.db"
+POSTGRES_URL="sqlite:///./novara.db"
 ```
 
 The app auto-creates all tables on startup via SQLAlchemy `Base.metadata.create_all()`.

@@ -5,7 +5,7 @@ from sqlalchemy import create_engine, MetaData, Table
 from sqlalchemy.orm import sessionmaker
 
 # 1. Clear SQL Database (Chat Sessions & Messages)
-DB_PATH = Path(__file__).resolve().parents[1] / "myally.db"
+DB_PATH = Path(__file__).resolve().parents[1] / "novara.db"
 if DB_PATH.exists():
     SQLALCHEMY_DATABASE_URL = f"sqlite:///{DB_PATH}"
     engine = create_engine(SQLALCHEMY_DATABASE_URL)

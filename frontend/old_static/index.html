@@ -4,8 +4,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MyAlly – Student Mental-Health Support</title>
-  <meta name="description" content="MyAlly – your empathetic mental-health companion for students." />
+  <title>Novara – Student Mental-Health Support</title>
+  <meta name="description" content="Novara – your empathetic mental-health companion for students." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
@@ -716,7 +716,7 @@
         <div class="header-left">
           <div class="bot-avatar" id="bot-avatar">😊</div>
           <div class="header-info">
-            <h2>MyAlly</h2>
+            <h2>Novara</h2>
             <p><span class="online-dot"></span><span id="status-text">here for you, always</span></p>
           </div>
         </div>
@@ -783,8 +783,8 @@
     ];
 
     // ─── State ──────────────────────────────────────────────────────
-    const HISTORY_KEY = 'myally_chat_history';
-    const THEME_KEY = 'myally_theme';
+    const HISTORY_KEY = 'novara_chat_history';
+    const THEME_KEY = 'novara_theme';
 
     let chatHistory = [];       // [{role, text, time}]
     let apiHistory = [];       // [{user, bot}] for API context
@@ -852,7 +852,7 @@
       container.innerHTML = `
     <div class="welcome-banner">
       <div style="font-size:48px; animation: float-avatar 3s ease-in-out infinite;">😊</div>
-      <h3>Hey! I'm MyAlly 👋</h3>
+      <h3>Hey! I'm Nova 👋</h3>
       <p>Your chill mental-health companion.<br>English, Hinglish, ya Minglish — sab chalega!</p>
       <div class="chips">
         <div class="chip" onclick="sendChip(this)">😓 Exams se bahut stress ho raha hai</div>

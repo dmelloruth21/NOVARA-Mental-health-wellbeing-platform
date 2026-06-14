@@ -1,7 +1,7 @@
 """
 src/app/chat_api.py
 ────────────────────
-FastAPI backend for MyAlly chat.
+FastAPI backend for Novara chat.
 Serves the static HTML/CSS/JS frontend and exposes a /chat POST endpoint.
 """
 from __future__ import annotations
@@ -26,7 +26,7 @@ async def lifespan(app: FastAPI):
     # No SQL DB to initialize anymore
     yield
 
-app = FastAPI(title="MyAlly Mental-Health Support", lifespan=lifespan)
+app = FastAPI(title="Novara Mental-Health Support", lifespan=lifespan)
 
 # Serve everything inside frontend/dist
 _STATIC_DIR = Path(__file__).resolve().parents[3] / "frontend" / "dist"

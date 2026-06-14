@@ -1,244 +1,294 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './Onboarding.css';
 
 export default function Onboarding({ authToken }) {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    nickname: '',
-    gender: '',
-    preferred_tone: 'Casual',
-    support_style: 'Listening',
-    lifestyle_patterns: '',
-    support_network: '',
-    education: ''
-  });
+  
+  // Basic user profile info (Step 0)
+  const [nickname, setNickname] = useState('');
+  const [gender, setGender] = useState('');
+  
+  // Step tracker
+  // Step 0: Profile Info (Nickname/Gender)
+  // Steps 1 to 8: Questionnaire
+  // Step 9: Analyzing loader
+  const [currentStep, setCurrentStep] = useState(0);
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  // User responses
+  // Format: { qIndex: { choice: 'Yes'|'No', bother: 'Extremely'|'Considerably'|'Slightly'|'Not at all'|null } }
+  const [answers, setAnswers] = useState({});
+
+  // 8 Dynamic Questions from the user
+  const questions = [
+    {
+      id: 1,
+      text: "Do you often feel down or lacking in energy?",
+      hasBother: true
+    },
+    {
+      id: 2,
+      text: "Do you regularly take action to meet goals you have set for work or at home?",
+      hasBother: false
+    },
+    {
+      id: 3,
+      text: "Do you usually get enough good sleep?",
+      hasBother: false
+    },
+    {
+      id: 4,
+      text: "Do you often feel tensed, nervous or insecure in new situations?",
+      hasBother: true
+    },
+    {
+      id: 5,
+      text: "Are you often very critical about yourself?",
+      hasBother: true
+    },
+    {
+      id: 6,
+      text: "Do you tend to have looping thoughts that seem like problem solving but that never reach a solution?",
+      hasBother: true
+    },
+    {
+      id: 7,
+      text: "Do you often have conflicts or arguments with others?",
+      hasBother: false
+    },
+    {
+      id: 8,
+      text: "Are you usually able to maintain a work-life balance?",
+      hasBother: false
+    }
+  ];
+
+  const totalSteps = questions.length + 1; // Basic Info + 8 questions
+
+  // Determine current active question (1-indexed for convenience)
+  const isQuestionStep = currentStep > 0 && currentStep <= questions.length;
+  const currentQuestion = isQuestionStep ? questions[currentStep - 1] : null;
+  const currentAnswer = currentQuestion ? (answers[currentQuestion.id] || { choice: null, bother: null }) : null;
+
+  // Handles primary choice: Yes / No
+  const handleChoiceSelect = (choice) => {
+    if (!currentQuestion) return;
+    
+    setAnswers({
+      ...answers,
+      [currentQuestion.id]: {
+        choice: choice,
+        // Reset bother if choice changed to 'No'
+        bother: choice === 'Yes' && currentQuestion.hasBother ? currentAnswer.bother : null
+      }
+    });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await fetch('/api/user/onboarding', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${authToken}`
-        },
-        body: JSON.stringify(formData)
-      });
-      if (res.ok) {
-        navigate('/chat');
+  // Handles secondary choice: Distress level
+  const handleBotherSelect = (level) => {
+    if (!currentQuestion) return;
+    
+    setAnswers({
+      ...answers,
+      [currentQuestion.id]: {
+        ...currentAnswer,
+        bother: level
       }
-    } catch (err) {
-      console.error(err);
-      alert('Failed to save profile');
+    });
+  };
+
+  // State checks for navigation eligibility
+  const isNextDisabled = () => {
+    if (currentStep === 0) {
+      return !nickname.trim() || !gender;
+    }
+    
+    if (isQuestionStep) {
+      if (!currentAnswer.choice) return true;
+      if (currentAnswer.choice === 'Yes' && currentQuestion.hasBother && !currentAnswer.bother) {
+        return true;
+      }
+    }
+    
+    return false;
+  };
+
+  const handleNext = () => {
+    if (currentStep < questions.length) {
+      setCurrentStep(currentStep + 1);
+    } else {
+      // Transition to final analysis loader screen
+      setCurrentStep(questions.length + 1);
+      submitOnboarding();
     }
   };
 
+  const handleBack = () => {
+    if (currentStep > 0) {
+      setCurrentStep(currentStep - 1);
+    }
+  };
+
+  const submitOnboarding = async () => {
+    // Formulate payload
+    const payload = {
+      nickname: nickname,
+      gender: gender,
+      answers: answers,
+      onboarding_completed: true
+    };
+
+    // Simulate analysis screen delay for premium feel (1.5 seconds)
+    setTimeout(() => {
+      // UI-First Mode: Directly navigate to dashboard and save mock state
+      localStorage.setItem('mockProfile', JSON.stringify(payload));
+      navigate('/dashboard');
+    }, 2000);
+  };
+
+  // Determine page state style wrapper based on selection
+  let pageStyleClass = 'state-neutral';
+  if (isQuestionStep && currentAnswer && currentAnswer.choice) {
+    pageStyleClass = currentAnswer.choice === 'Yes' ? 'state-yes' : 'state-no';
+  }
+
   return (
-    <div className="onboarding-page" style={{ 
-      background: 'linear-gradient(135deg, #f3e8ff 0%, #fce7f3 50%, #fff1f1 100%)',
-      minHeight: '100vh',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      padding: '40px 20px',
-      fontFamily: "'Outfit', sans-serif"
-    }}>
-      <div className="glass-card" style={{ 
-        width: '94%', 
-        maxWidth: '1000px', 
-        maxHeight: '90vh',
-        overflowY: 'auto',
-        padding: '60px 50px',
-        borderRadius: '40px',
-        background: 'rgba(255, 250, 245, 0.92)', // Soft off-white/beige
-        backdropFilter: 'blur(40px)',
-        WebkitBackdropFilter: 'blur(40px)',
-        border: '1px solid rgba(255, 255, 255, 0.6)',
-        boxShadow: '0 40px 100px -20px rgba(0, 0, 0, 0.08)',
-        animation: 'slideUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1)'
-      }}>
-        <div style={{ textAlign: 'center', marginBottom: '50px' }}>
-          <h1 style={{ 
-            fontSize: '3rem', 
-            fontWeight: '900', 
-            background: 'linear-gradient(to right, #833ab4, #fd1d1d, #fcb045)', 
-            WebkitBackgroundClip: 'text', 
-            WebkitTextFillColor: 'transparent',
-            marginBottom: '10px',
-            letterSpacing: '-1.5px'
-          }}>
-            Personalize Your Experience ✨
-          </h1>
-          <p style={{ color: '#64748b', fontSize: '1.2rem', fontWeight: '400' }}>
-            Help MyAlly understand you better so we can provide the best support.
-          </p>
-        </div>
+    <div className={`onboarding-page ${pageStyleClass}`}>
+      <div className="onboarding-card">
         
-        <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '20px' }}>
-          {/* Row 1: Basic Info */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 1fr', gap: '20px' }}>
-            <div className="form-group">
-              <label style={{ color: '#1e293b', fontWeight: '700', marginBottom: '8px', display: 'block', fontSize: '0.95rem' }}>
-                Nickname
-              </label>
-              <input 
-                type="text" 
-                name="nickname" 
-                className="premium-input" 
-                placeholder="How should I call you?"
-                value={formData.nickname} 
-                onChange={handleChange} 
-                required 
-                style={{ width: '100%', padding: '14px 18px', borderRadius: '16px', background: 'rgba(255, 255, 255, 0.6)', border: '1px solid #e2e8f0', color: '#1e293b', fontSize: '1rem', outline: 'none' }}
-              />
+        {/* Step 0: Basic Demographics */}
+        {currentStep === 0 && (
+          <div>
+            <div className="onboarding-header">
+              <h2 className="question-number">Hello there! 👋</h2>
+              <h1 className="question-text">We'd love to know you a little better before we begin</h1>
             </div>
-            <div className="form-group">
-              <label style={{ color: '#1e293b', fontWeight: '700', marginBottom: '8px', display: 'block', fontSize: '0.95rem' }}>Gender</label>
-              <select 
-                name="gender" 
-                className="premium-input" 
-                value={formData.gender} 
-                onChange={handleChange} 
-                required
-                style={{ width: '100%', padding: '14px 18px', borderRadius: '16px', background: 'rgba(255,255,255,0.6)', border: '1px solid #e2e8f0', color: '#1e293b', cursor: 'pointer', outline: 'none', fontSize: '1rem' }}
-              >
-                <option value="">Select...</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Non-binary">Non-binary</option>
-                <option value="Prefer not to say">Prefer not to say</option>
-              </select>
-            </div>
-            <div className="form-group">
-              <label style={{ color: '#1e293b', fontWeight: '700', marginBottom: '8px', display: 'block', fontSize: '0.95rem' }}>Tone</label>
-              <select 
-                name="preferred_tone" 
-                className="premium-input" 
-                value={formData.preferred_tone} 
-                onChange={handleChange}
-                style={{ width: '100%', padding: '14px 18px', borderRadius: '16px', background: 'rgba(255,255,255,0.6)', border: '1px solid #e2e8f0', color: '#1e293b', cursor: 'pointer', outline: 'none', fontSize: '1rem' }}
-              >
-                <option value="Casual">Casual</option>
-                <option value="Formal">Formal</option>
-                <option value="Humorous">Humorous</option>
-                <option value="Direct">Direct</option>
-              </select>
-            </div>
-          </div>
+            
+            <div className="form-input-container">
+              <div className="form-field">
+                <label htmlFor="nickname">What should I call you?</label>
+                <input
+                  type="text"
+                  id="nickname"
+                  placeholder="Enter your nickname..."
+                  value={nickname}
+                  onChange={(e) => setNickname(e.target.value)}
+                  maxLength={15}
+                />
+              </div>
 
-          {/* Row 2: Support Style */}
-          <div className="form-group">
-            <label style={{ color: '#1e293b', fontWeight: '700', marginBottom: '10px', display: 'block', fontSize: '0.95rem' }}>
-              How do you like to be supported?
-            </label>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '12px' }}>
-              {['Advice', 'Listening', 'Distraction', 'Motivation'].map(style => (
-                <button
-                  key={style}
-                  type="button"
-                  onClick={() => setFormData({...formData, support_style: style})}
-                  style={{
-                    padding: '12px',
-                    borderRadius: '14px',
-                    border: '1px solid #e2e8f0',
-                    background: formData.support_style === style ? 'linear-gradient(135deg, #833ab4, #fd1d1d)' : 'rgba(255,255,255,0.6)',
-                    color: formData.support_style === style ? 'white' : '#64748b',
-                    fontWeight: '700',
-                    cursor: 'pointer',
-                    transition: '0.3s'
-                  }}
+              <div className="form-field">
+                <label htmlFor="gender">Gender (for personalized pronouns)</label>
+                <select
+                  id="gender"
+                  value={gender}
+                  onChange={(e) => setGender(e.target.value)}
                 >
-                  {style}
+                  <option value="">Select gender...</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Prefer not to say">Prefer not to say</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="navigation-controls" style={{ justifyContent: 'flex-end' }}>
+              <button
+                className="btn-nav btn-nav--next"
+                onClick={handleNext}
+                disabled={isNextDisabled()}
+              >
+                Continue →
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Steps 1 to 8: Question Slider */}
+        {isQuestionStep && currentQuestion && (
+          <div>
+            {/* Header progress bar */}
+            <div className="onboarding-header">
+              <div className="onboarding-progress-container">
+                <span className="onboarding-progress-label">
+                  Question {currentStep} of {questions.length}
+                </span>
+              </div>
+              <div className="onboarding-progress-bar-bg">
+                <div 
+                  className="onboarding-progress-bar-fill" 
+                  style={{ width: `${(currentStep / questions.length) * 100}%` }}
+                />
+              </div>
+            </div>
+
+            <div className="question-content">
+              <h2 className="question-number">Personal Insight</h2>
+              <h1 className="question-text">{currentQuestion.text}</h1>
+
+              {/* Yes / No Choices */}
+              <div className="choices-container">
+                <button
+                  className={`choice-btn choice-btn--yes ${currentAnswer.choice === 'Yes' ? 'active' : ''}`}
+                  onClick={() => handleChoiceSelect('Yes')}
+                >
+                  <span className="choice-icon">Yes</span>
                 </button>
-              ))}
+                <button
+                  className={`choice-btn choice-btn--no ${currentAnswer.choice === 'No' ? 'active' : ''}`}
+                  onClick={() => handleChoiceSelect('No')}
+                >
+                  <span className="choice-icon">No</span>
+                </button>
+              </div>
+
+              {/* Conditional distress level (does it bother you?) */}
+              {currentAnswer.choice === 'Yes' && currentQuestion.hasBother && (
+                <div className="bothered-panel">
+                  <h3 className="bothered-title">Does this bother you?</h3>
+                  <div className="bothered-options">
+                    {['Extremely', 'Considerably', 'Slightly', 'Not at all'].map((level) => (
+                      <button
+                        key={level}
+                        className={`bothered-btn ${currentAnswer.bother === level ? 'active' : ''}`}
+                        onClick={() => handleBotherSelect(level)}
+                      >
+                        {level}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Navigations */}
+            <div className="navigation-controls">
+              <button className="btn-nav btn-nav--back" onClick={handleBack}>
+                ← Back
+              </button>
+              <button
+                className="btn-nav btn-nav--next"
+                onClick={handleNext}
+                disabled={isNextDisabled()}
+              >
+                {currentStep === questions.length ? 'Finish' : 'Next'}
+              </button>
             </div>
           </div>
+        )}
 
-          {/* Row 3: Lifestyle & Social */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
-            <div className="form-group">
-              <label style={{ color: '#1e293b', fontWeight: '700', marginBottom: '8px', display: 'block', fontSize: '0.95rem' }}>Social Support</label>
-              <input 
-                type="text" 
-                name="support_network" 
-                className="premium-input"
-                placeholder="Who do you talk to?"
-                value={formData.support_network} 
-                onChange={handleChange}
-                style={{ width: '100%', padding: '14px 18px', borderRadius: '16px', background: 'rgba(255,255,255,0.6)', border: '1px solid #e2e8f0', color: '#1e293b', outline: 'none', fontSize: '1rem' }}
-              />
-            </div>
-            <div className="form-group">
-              <label style={{ color: '#1e293b', fontWeight: '700', marginBottom: '8px', display: 'block', fontSize: '0.95rem' }}>Education</label>
-              <input 
-                type="text" 
-                name="education" 
-                className="premium-input"
-                placeholder="College Student..."
-                value={formData.education} 
-                onChange={handleChange} 
-                required
-                style={{ width: '100%', padding: '14px 18px', borderRadius: '16px', background: 'rgba(255,255,255,0.6)', border: '1px solid #e2e8f0', color: '#1e293b', outline: 'none', fontSize: '1rem' }}
-              />
-            </div>
+        {/* Step 9: Final loading analyzer */}
+        {currentStep === totalSteps && (
+          <div className="analyzing-container">
+            <div className="analyzing-spinner" />
+            <h1 className="analyzing-title">Curating Your Sanctuary</h1>
+            <p className="analyzing-subtitle">
+              Analyzing your psychological profile to tailor Nova's tone and configure your personal dashboard...
+            </p>
           </div>
+        )}
 
-          {/* Row 4: Lifestyle Textarea (More compact) */}
-          <div className="form-group">
-            <label style={{ color: '#1e293b', fontWeight: '700', marginBottom: '8px', display: 'block', fontSize: '0.95rem' }}>
-              Lifestyle & Routines
-            </label>
-            <textarea 
-              name="lifestyle_patterns" 
-              className="premium-input" 
-              placeholder="e.g. I'm a night owl..."
-              value={formData.lifestyle_patterns} 
-              onChange={handleChange} 
-              style={{ width: '100%', padding: '14px 18px', borderRadius: '16px', background: 'rgba(255,255,255,0.6)', border: '1px solid #e2e8f0', color: '#1e293b', minHeight: '60px', outline: 'none', resize: 'none', fontSize: '1rem' }}
-            />
-          </div>
-
-          <button 
-            type="submit" 
-            className="start-journey-btn" 
-            style={{ 
-              marginTop: '10px', 
-              padding: '16px', 
-              fontSize: '1.2rem', 
-              fontWeight: '900', 
-              background: 'linear-gradient(to right, #833ab4, #fd1d1d, #fcb045)',
-              border: 'none',
-              borderRadius: '16px',
-              color: 'white',
-              cursor: 'pointer',
-              transition: '0.4s',
-              boxShadow: '0 10px 20px rgba(253, 29, 29, 0.2)'
-            }}
-          >
-            Start My Journey
-          </button>
-        </form>
       </div>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;900&display=swap');
-        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        .premium-input:focus {
-          border-color: #fd1d1d !important;
-          background: white !important;
-          box-shadow: 0 0 0 4px rgba(253, 29, 29, 0.1);
-        }
-        .start-journey-btn:hover {
-          transform: translateY(-4px);
-          box-shadow: 0 20px 40px rgba(253, 29, 29, 0.5);
-        }
-        .start-journey-btn:active {
-          transform: translateY(0);
-        }
-      `}</style>
     </div>
   );
 }

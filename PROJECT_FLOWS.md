@@ -1,8 +1,8 @@
-# MyAlly Project - Complete Flow Documentation
+# Novara Project - Complete Flow Documentation
 
 ## 📊 Overview of All Flows
 
-This document covers all the major workflows in the MyAlly system:
+This document covers all the major workflows in the Novara system:
 1. **Authentication & Onboarding Flow**
 2. **Chat Message Processing Flow**
 3. **RAG Retrieval Flow**
@@ -102,7 +102,7 @@ USER SENDS MESSAGE
 [STEP 8] PROMPT BUILDING
         Combine all information:
         ```
-        System: You are MyAlly, an empathetic mental health chatbot.
+        System: You are Nova, an empathetic mental health chatbot.
         User tone preference: [warm/casual/professional]
         User context: [their background from onboarding]
         
@@ -124,7 +124,7 @@ USER SENDS MESSAGE
           * User preferences (personalization)
         ↓
 [STEP 10] LLM GENERATES RESPONSE
-        MyAlly: "I hear you about exam anxiety. That's really common 
+        Nova: "I hear you about exam anxiety. That's really common 
         among students. Here are some grounding techniques..."
         ↓
 [STEP 11] SAVE TO DATABASE
@@ -392,7 +392,7 @@ CHATTING
 │ 6. Qwen generates response      │
 │ 7. Both messages saved to DB    │
 │ 8. Response displayed in UI     │
-│ 9. User sees MyAlly's reply     │
+│ 9. User sees Nova's reply     │
 │ 10. User types next message     │
 │ 11. Repeat steps 2-10           │
 └────────────────────────────────┘
@@ -407,7 +407,7 @@ DAY 2: RETURNING USER
 │    - "New Chat"                 │
 │ 4. Clicks "Yesterday's Chat"    │
 │ 5. All old messages loaded      │
-│ 6. MyAlly remembers context     │
+│ 6. Nova remembers context     │
 │ 7. User continues conversation  │
 │ 8. Messages saved to same DB    │
 └────────────────────────────────┘
@@ -452,7 +452,7 @@ CRISIS SCENARIO
 5. **Admin panel** allows human intervention
 6. **Personalization** comes from user profile + preferences
 
-This multi-layered approach makes MyAlly:
+This multi-layered approach makes Nova:
 - ✅ **Safe** (crisis detection)
 - ✅ **Smart** (RAG retrieval)
 - ✅ **Personal** (user memory)

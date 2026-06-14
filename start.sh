@@ -10,6 +10,6 @@ fi
 
 # This server is already configured in chat_api.py to serve the 
 # frontend files from the 'frontend/dist' folder created during build.
-echo "🚀 Starting MyAlly (Serving Frontend + Backend)..."
+echo "🚀 Starting Novara (Serving Frontend + Backend)..."
 
 python3 -m uvicorn src.app.chat_api:app --host 0.0.0.0 --port ${PORT:-8000}
