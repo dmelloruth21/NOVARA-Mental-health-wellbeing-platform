@@ -62,7 +62,7 @@ export default function Dashboard({ authToken }) {
             answers: data.answers || {}
           });
         }
-      } catch (err) {
+      } catch {
         console.warn("Operating in mock mode.");
       }
     };
@@ -75,7 +75,7 @@ export default function Dashboard({ authToken }) {
       setScrolled(window.scrollY > 20);
 
       // Detect active section for nav highlight
-      const sections = ['hero', 'insights', 'chat', 'blogs'];
+      const sections = ['hero', 'insights', 'blogs'];
       for (const id of sections) {
         const el = document.getElementById(`section-${id}`);
         if (el) {
@@ -160,48 +160,12 @@ export default function Dashboard({ authToken }) {
     }
   ];
 
-  // ---------- Chat ----------
-  const [chatMessages, setChatMessages] = useState([]);
-  const [inputVal, setInputVal] = useState('');
-  const chatEndRef = useRef(null);
 
-  useEffect(() => {
-    setChatMessages([{
-      role: 'bot',
-      text: `Hi ${profile.nickname} 👋 I'm Nova, your AI wellness companion. How are you feeling today?`
-    }]);
-  }, [profile.nickname]);
-
-  useEffect(() => {
-    if (chatMessages.length > 1 && chatEndRef.current) {
-      chatEndRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }
-  }, [chatMessages]);
-
-  const handleSend = () => {
-    if (!inputVal.trim()) return;
-    const newMsgs = [...chatMessages, { role: 'user', text: inputVal }];
-    setChatMessages(newMsgs);
-    const lowers = inputVal.toLowerCase();
-    setInputVal('');
-    setTimeout(() => {
-      let botResponse = "I'm always here to listen and help you unpack your day. Tell me more 💬";
-      if (lowers.includes('stress') || lowers.includes('anxious')) {
-        botResponse = "I hear you. Stress is heavy. Take a breath with me — what's one small thing we can do right now to ease the weight? 🫂";
-      } else if (lowers.includes('tired') || lowers.includes('exhausted')) {
-        botResponse = "Let's keep things low-pressure. You don't need to fix anything right now. Just rest, you deserve it. ☕";
-      } else if (lowers.includes('sad') || lowers.includes('cry')) {
-        botResponse = "It's completely okay to feel sad. You don't need to put on a brave face with me. I'm right here ❤️";
-      }
-      setChatMessages(prev => [...prev, { role: 'bot', text: botResponse }]);
-    }, 1200);
-  };
 
   // Scroll reveal refs
   const [aboutRef, aboutVisible] = useScrollReveal();
   const [featuresRef, featuresVisible] = useScrollReveal();
   const [insightsRef, insightsVisible] = useScrollReveal();
-  const [chatRef, chatVisible] = useScrollReveal();
   const [blogsRef, blogsVisible] = useScrollReveal();
 
 
@@ -220,7 +184,6 @@ export default function Dashboard({ authToken }) {
           {[
             { id: 'hero', label: 'Home' },
             { id: 'insights', label: 'My Insights' },
-            { id: 'chat', label: 'Nova AI' },
             { id: 'blogs', label: 'Blogs to Read' }
           ].map(({ id, label }) => (
             <button
@@ -260,7 +223,7 @@ export default function Dashboard({ authToken }) {
             <img src="/mascot.png" alt="Nova mascot waving hello" className="hero-mascot-img" />
           </div>
 
-          <button className="hero-cta-btn" onClick={() => scrollTo('chat')}>
+          <button className="hero-cta-btn" onClick={() => navigate('/chat?tab=chat')}>
             💬 Talk to me
           </button>
 
@@ -386,48 +349,6 @@ export default function Dashboard({ authToken }) {
               <span className="insight-tag tag-purple">Focus</span>
               <h3>Bite-Sized Goal Setting</h3>
               <p>Keep goals incredibly low-pressure. Break each item into tiny 10-minute sprints — this prevents overwhelm and builds momentum.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ──────── CHAT SECTION ──────── */}
-      <section id="section-chat" className="hub-section section-chat">
-        <div ref={chatRef} className={`reveal-wrapper ${chatVisible ? 'revealed' : ''}`}>
-          <div className="section-label">AI Companion</div>
-          <h2 className="section-title">Chat with Nova</h2>
-          <p className="section-sub">Your empathetic, judgment-free space — available around the clock</p>
-
-          <div className="hub-chat-container">
-            <div className="mini-chat-widget-wrapper">
-              <div className="mini-chat-header">
-                <div className="mini-chat-status-dot" />
-                <div>
-                  <div className="mini-chat-header-name">Nova</div>
-                  <div className="mini-chat-header-status">Online & listening...</div>
-                </div>
-              </div>
-              <div className="mini-chat-body">
-                {chatMessages.map((m, i) => (
-                  <div key={i} className={`mini-chat-bubble ${m.role}`}>
-                    {m.text}
-                  </div>
-                ))}
-                <div ref={chatEndRef} />
-              </div>
-              <div className="mini-chat-input-row">
-                <input
-                  type="text"
-                  className="mini-chat-input"
-                  placeholder="Share what's on your mind..."
-                  value={inputVal}
-                  onChange={(e) => setInputVal(e.target.value)}
-                  onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                />
-                <button className="mini-chat-send-btn" onClick={handleSend}>
-                  ➤
-                </button>
-              </div>
             </div>
           </div>
         </div>

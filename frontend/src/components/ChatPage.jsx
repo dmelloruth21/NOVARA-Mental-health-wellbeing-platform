@@ -380,13 +380,13 @@ const musicCategories = [
     label: '🎓 Study Focus',
     icon: '📚',
     description: 'Designed for deep work, coding sessions, assignments, and exam preparation.',
-    duration: '20–45 mins',
+    duration: '20–30 mins',
     accent: { color: '#38bdf8', bg: 'rgba(56, 189, 248, 0.08)', border: 'rgba(56, 189, 248, 0.2)', glow: 'rgba(56, 189, 248, 0.15)' },
     tracks: [
-      { id: 'focus-1', title: 'Deep Focus Flow', duration: '35 min', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3' },
-      { id: 'focus-2', title: 'Coding Zone', duration: '28 min', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3' },
-      { id: 'focus-3', title: 'Exam Prep Ambient', duration: '40 min', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3' },
-      { id: 'focus-4', title: 'Library Ambience', duration: '45 min', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3' },
+      { id: 'focus-1', title: 'Deep Focus Flow', duration: '25 min', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3' },
+      { id: 'focus-2', title: 'Coding Zone', duration: '22 min', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3' },
+      { id: 'focus-3', title: 'Exam Prep Ambient', duration: '28 min', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3' },
+      { id: 'focus-4', title: 'Library Ambience', duration: '30 min', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3' },
     ]
   },
   {
@@ -394,13 +394,13 @@ const musicCategories = [
     label: '🧘 Meditation & Mindfulness',
     icon: '🧘',
     description: 'Slow your thoughts and reconnect with the present moment.',
-    duration: '10–30 mins',
+    duration: '5–10 mins',
     accent: { color: '#a78bfa', bg: 'rgba(167, 139, 250, 0.08)', border: 'rgba(167, 139, 250, 0.2)', glow: 'rgba(167, 139, 250, 0.15)' },
     tracks: [
-      { id: 'med-1', title: 'Zen Garden Meditation', duration: '20 min', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
-      { id: 'med-2', title: 'Floating Clouds', duration: '15 min', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3' },
-      { id: 'med-3', title: 'Mountain Stillness', duration: '25 min', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3' },
-      { id: 'med-4', title: 'Mindful Breathing', duration: '10 min', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3' },
+      { id: 'med-1', title: 'Zen Garden Meditation', duration: '8 min', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
+      { id: 'med-2', title: 'Floating Clouds', duration: '6 min', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3' },
+      { id: 'med-3', title: 'Mountain Stillness', duration: '10 min', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3' },
+      { id: 'med-4', title: 'Mindful Breathing', duration: '5 min', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3' },
     ]
   },
   {
@@ -408,13 +408,13 @@ const musicCategories = [
     label: '💙 Anxiety Relief & Calm',
     icon: '💙',
     description: 'Reduce mental clutter and create emotional calm.',
-    duration: '15–30 mins',
+    duration: '7–8 mins',
     accent: { color: '#67e8f9', bg: 'rgba(103, 232, 249, 0.08)', border: 'rgba(103, 232, 249, 0.2)', glow: 'rgba(103, 232, 249, 0.15)' },
     tracks: [
-      { id: 'anx-1', title: 'Calm Waters', duration: '20 min', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3' },
-      { id: 'anx-2', title: 'Gentle Piano Reflections', duration: '18 min', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3' },
-      { id: 'anx-3', title: 'Soft Rain Therapy', duration: '25 min', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3' },
-      { id: 'anx-4', title: 'Peaceful Evening', duration: '30 min', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3' },
+      { id: 'anx-1', title: 'Calm Waters', duration: '8 min', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3' },
+      { id: 'anx-2', title: 'Gentle Piano Reflections', duration: '7 min', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3' },
+      { id: 'anx-3', title: 'Soft Rain Therapy', duration: '8 min', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3' },
+      { id: 'anx-4', title: 'Peaceful Evening', duration: '7 min', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3' },
     ]
   },
   {
@@ -422,13 +422,13 @@ const musicCategories = [
     label: '😴 Sleep & Relaxation',
     icon: '🌙',
     description: 'Prepare your mind and body for restful, deep sleep.',
-    duration: '20–60 mins',
+    duration: '20–40 mins',
     accent: { color: '#818cf8', bg: 'rgba(129, 140, 248, 0.08)', border: 'rgba(129, 140, 248, 0.2)', glow: 'rgba(129, 140, 248, 0.18)' },
     tracks: [
-      { id: 'sleep-1', title: 'Moonlight Melody', duration: '45 min', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-13.mp3' },
-      { id: 'sleep-2', title: 'Ocean Dreams', duration: '60 min', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-14.mp3' },
-      { id: 'sleep-3', title: 'Midnight Lullaby', duration: '30 min', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3' },
-      { id: 'sleep-4', title: 'Rainy Night', duration: '50 min', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-16.mp3' },
+      { id: 'sleep-1', title: 'Moonlight Melody', duration: '35 min', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-13.mp3' },
+      { id: 'sleep-2', title: 'Ocean Dreams', duration: '40 min', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-14.mp3' },
+      { id: 'sleep-3', title: 'Midnight Lullaby', duration: '25 min', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3' },
+      { id: 'sleep-4', title: 'Rainy Night', duration: '20 min', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-16.mp3' },
     ]
   }
 ];
@@ -692,6 +692,8 @@ export default function ChatPage({ authToken }) {
   const [todayRecommendation] = useState(() =>
     musicRecommendations[Math.floor(Math.random() * musicRecommendations.length)]
   );
+  // Which playlist is expanded (null = showing category grid)
+  const [selectedPlaylistId, setSelectedPlaylistId] = useState(null);
 
   const handleProgressChange = (e) => {
     const progressVal = Number(e.target.value);
@@ -1226,7 +1228,7 @@ export default function ChatPage({ authToken }) {
                   <div className="booking-success-message">
                     <span className="success-icon">✅</span>
                     <h3>Session Requested!</h3>
-                    <p>Your matching request has been submitted. A counseling coordinator will message you with the link to join once **{selectedCounselor.name}** accepts.</p>
+                    <p>Your matching request has been submitted. A counseling coordinator will message you with the link to join once <strong>{selectedCounselor.name}</strong> accepts.</p>
                     <button className="care-action-btn primary" onClick={() => setSelectedCounselor(null)}>Close</button>
                   </div>
                 )}
@@ -1240,149 +1242,197 @@ export default function ChatPage({ authToken }) {
 
   const renderMusicPanel = () => {
     const favoritedTrackObjects = allTracksFlat.filter(t => favoritedTracks.includes(t.id));
+    const selectedCat = selectedPlaylistId ? musicCategories.find(c => c.id === selectedPlaylistId) : null;
 
-    return (
-      <div className="panel-container music-hub-panel">
-
-        {/* ── Page Header ── */}
-        <div className="music-hub-header">
-          <div>
-            <h2 className="music-hub-title">🎵 Focus &amp; Wellness Music</h2>
-            <p className="music-hub-subtitle">Curated soundscapes to help you focus, relax, recharge, and sleep better.</p>
-          </div>
-          <div className="music-page-stats">
-            <span className="music-stat-chip">🎵 16+ Tracks</span>
-            <span className="music-stat-chip">📂 4 Categories</span>
-            <span className="music-stat-chip">🧘 Stress Relief &amp; Focus</span>
-          </div>
-        </div>
-
-        {/* ── Category Cards Grid ── */}
-        <div className="music-categories-grid">
-          {musicCategories.map(cat => (
-            <div
-              key={cat.id}
-              className="music-cat-card"
-              style={{ borderColor: cat.accent.border, background: cat.accent.bg }}
-            >
-              <div className="music-cat-header">
-                <div className="music-cat-title-group">
-                  <span className="music-cat-icon">{cat.icon}</span>
-                  <div>
-                    <h3 className="music-cat-title" style={{ color: cat.accent.color }}>{cat.label}</h3>
-                    <p className="music-cat-desc">{cat.description}</p>
-                  </div>
+    // ── Playlist Detail View ──
+    if (selectedCat) {
+      return (
+        <div className="panel-container mhub-panel">
+          <div className="mhub-playlist-view">
+            {/* Hero Banner */}
+            <div className="mhub-playlist-hero" style={{ background: `linear-gradient(135deg, ${selectedCat.accent.bg} 0%, rgba(10,14,26,0) 100%)`, borderColor: selectedCat.accent.border }}>
+              <button className="mhub-back-btn" onClick={() => setSelectedPlaylistId(null)}>← Back</button>
+              <div className="mhub-playlist-hero-content">
+                <span className="mhub-playlist-hero-icon">{selectedCat.icon}</span>
+                <div>
+                  <p className="mhub-playlist-hero-tag" style={{ color: selectedCat.accent.color }}>PLAYLIST</p>
+                  <h2 className="mhub-playlist-hero-title">{selectedCat.label}</h2>
+                  <p className="mhub-playlist-hero-desc">{selectedCat.description}</p>
+                  <p className="mhub-playlist-hero-meta">⏱ {selectedCat.duration} &nbsp;•&nbsp; {selectedCat.tracks.length} tracks</p>
                 </div>
-                <span className="music-cat-duration-badge" style={{ color: cat.accent.color, borderColor: cat.accent.border }}>
-                  ⏱ {cat.duration}
-                </span>
               </div>
+            </div>
 
-              <div className="music-track-list">
-                {cat.tracks.map(track => {
-                  const isActive = playingTrack && playingTrack.id === track.id;
-                  const isFav = favoritedTracks.includes(track.id);
-                  return (
-                    <div
-                      key={track.id}
-                      className={`music-track-row ${isActive ? 'active' : ''}`}
-                      style={isActive ? { boxShadow: `0 0 14px ${cat.accent.glow}`, borderColor: cat.accent.border } : {}}
-                    >
-                      <button
-                        className="music-play-btn"
-                        style={isActive ? { color: cat.accent.color } : {}}
-                        onClick={() => {
-                          if (isActive) {
-                            setIsMusicPlaying(!isMusicPlaying);
-                          } else {
-                            playTrack(track, cat.label);
-                          }
-                        }}
-                      >
-                        {isActive && isMusicPlaying ? '⏸' : '▶'}
-                      </button>
-                      <span className="music-track-title" onClick={() => playTrack(track, cat.label)}>
-                        {track.title}
-                        {isActive && isMusicPlaying && <span className="music-playing-dot">●</span>}
-                      </span>
-                      <span className="music-track-duration">⏱ {track.duration}</span>
-                      <button
-                        className={`music-fav-btn ${isFav ? 'active' : ''}`}
-                        onClick={e => { e.stopPropagation(); toggleFavoriteTrack(track.id); }}
-                        title={isFav ? 'Remove from favorites' : 'Save to favorites'}
-                      >
-                        {isFav ? '❤️' : '🤍'}
-                      </button>
+            {/* Track List */}
+            <div className="mhub-tracklist">
+              {selectedCat.tracks.map((track, idx) => {
+                const isActive = playingTrack && playingTrack.id === track.id;
+                const isFav = favoritedTracks.includes(track.id);
+                return (
+                  <div
+                    key={track.id}
+                    className={`mhub-track-row ${isActive ? 'mhub-track-row--active' : ''}`}
+                    style={isActive ? { borderColor: selectedCat.accent.border, boxShadow: `0 0 18px ${selectedCat.accent.glow}` } : {}}
+                    onClick={() => { if (!isActive) playTrack(track, selectedCat.label); }}
+                  >
+                    <span className="mhub-track-idx" style={isActive ? { color: selectedCat.accent.color } : {}}>
+                      {isActive && isMusicPlaying ? '♫' : idx + 1}
+                    </span>
+                    <div className="mhub-track-info">
+                      <span className="mhub-track-name" style={isActive ? { color: selectedCat.accent.color } : {}}>{track.title}</span>
+                      <span className="mhub-track-duration">{track.duration}</span>
                     </div>
-                  );
-                })}
-              </div>
+                    <div className="mhub-track-actions">
+                      <button
+                        className="mhub-fav-btn"
+                        onClick={e => { e.stopPropagation(); toggleFavoriteTrack(track.id); }}
+                        title={isFav ? 'Remove favorite' : 'Save favorite'}
+                      >{isFav ? '❤️' : '🤍'}</button>
+                      <button
+                        className="mhub-play-icon-btn"
+                        style={isActive ? { background: selectedCat.accent.color, color: '#0a0e1a' } : {}}
+                        onClick={e => {
+                          e.stopPropagation();
+                          if (isActive) setIsMusicPlaying(!isMusicPlaying);
+                          else playTrack(track, selectedCat.label);
+                        }}
+                      >{isActive && isMusicPlaying ? '⏸' : '▶'}</button>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
-          ))}
-        </div>
+          </div>
 
-        {/* ── Recommended Today ── */}
-        <div className="music-recommendation-card">
-          <div className="rec-card-inner">
-            <div className="rec-card-left">
-              <span className="rec-sparkle">✨</span>
-              <div>
-                <p className="rec-card-label">Recommended Today</p>
-                <p className="rec-card-text">
-                  <strong>{todayRecommendation.text}</strong> Try <em>{todayRecommendation.track}</em>.
-                </p>
-                <p className="rec-card-hint">{todayRecommendation.hint}</p>
+          {/* Floating Mini Player */}
+          {playingTrack && (
+            <div className="mhub-mini-player">
+              <div className="mhub-mini-artwork">🎵</div>
+              <div className="mhub-mini-info">
+                <span className="mhub-mini-title">{playingTrack.title}</span>
+                <span className="mhub-mini-cat">{playingTrack.categoryLabel}</span>
               </div>
+              <div className="mhub-mini-progress">
+                <span className="mhub-mini-time">{formatTime(audioCurrentTime)}</span>
+                <input type="range" className="mhub-mini-bar" min="0" max="100" value={trackProgress} onChange={handleProgressChange} />
+                <span className="mhub-mini-time">{playingTrack.duration}</span>
+              </div>
+              <div className="mhub-mini-controls">
+                <button className="mhub-mini-btn" onClick={handlePrevTrack}>⏮</button>
+                <button className="mhub-mini-btn mhub-mini-btn--play" onClick={() => setIsMusicPlaying(!isMusicPlaying)}>{isMusicPlaying ? '⏸' : '▶'}</button>
+                <button className="mhub-mini-btn" onClick={handleNextTrack}>⏭</button>
+              </div>
+              <div className="mhub-mini-vol">
+                <span>🔊</span>
+                <input type="range" className="mhub-mini-bar" min="0" max="100" value={musicVolume} onChange={handleVolumeChange} />
+              </div>
+              <button className="mhub-mini-close" onClick={() => { setPlayingTrack(null); setIsMusicPlaying(false); }}>✕</button>
             </div>
-            <button
-              className="rec-play-btn"
-              onClick={() => {
-                const found = allTracksFlat.find(t => t.title === todayRecommendation.track);
-                if (found) {
-                  const cat = musicCategories.find(c => c.id === found.categoryId);
-                  playTrack(found, cat?.label || '');
-                }
-              }}
-            >
-              ▶ Play Now
-            </button>
+          )}
+        </div>
+      );
+    }
+
+    // ── Category Grid View (home) ──
+    return (
+      <div className="panel-container mhub-panel">
+
+        {/* Header */}
+        <div className="mhub-header">
+          <div className="mhub-header-left">
+            <h2 className="mhub-title">🎵 Focus &amp; Wellness Music</h2>
+            <p className="mhub-subtitle">Curated soundscapes to help you focus, relax, recharge, and sleep better.</p>
+          </div>
+          <div className="mhub-header-chips">
+            <span className="mhub-chip">🎵 16+ Tracks</span>
+            <span className="mhub-chip">📂 4 Playlists</span>
+            <span className="mhub-chip">🧘 Wellness</span>
           </div>
         </div>
 
-        {/* ── Saved Favorites ── */}
-        <div className="music-favorites-section">
-          <h3 className="music-favorites-title">❤️ Saved Favorites</h3>
+        {/* Recommended Today Banner */}
+        <div className="mhub-rec-banner">
+          <div className="mhub-rec-glow" />
+          <span className="mhub-rec-spark">✨</span>
+          <div className="mhub-rec-body">
+            <p className="mhub-rec-label">Recommended for Today</p>
+            <p className="mhub-rec-text"><strong>{todayRecommendation.text}</strong> Try <em>{todayRecommendation.track}</em>.</p>
+            <p className="mhub-rec-hint">{todayRecommendation.hint}</p>
+          </div>
+          <button
+            className="mhub-rec-btn"
+            onClick={() => {
+              const found = allTracksFlat.find(t => t.title === todayRecommendation.track);
+              if (found) { const cat = musicCategories.find(c => c.id === found.categoryId); playTrack(found, cat?.label || ''); }
+            }}
+          >▶ Play Now</button>
+        </div>
+
+        {/* Category Cards Grid */}
+        <div className="mhub-grid">
+          {musicCategories.map(cat => {
+            const activeInCat = cat.tracks.find(t => playingTrack && t.id === playingTrack.id);
+            return (
+              <div
+                key={cat.id}
+                className={`mhub-card ${activeInCat ? 'mhub-card--playing' : ''}`}
+                style={{ '--accent': cat.accent.color, '--accent-bg': cat.accent.bg, '--accent-border': cat.accent.border, '--accent-glow': cat.accent.glow }}
+              >
+                <div className="mhub-card-top">
+                  <span className="mhub-card-icon">{cat.icon}</span>
+                  <span className="mhub-card-duration">{cat.duration}</span>
+                </div>
+                <h3 className="mhub-card-title">{cat.label}</h3>
+                <p className="mhub-card-desc">{cat.description}</p>
+                <div className="mhub-card-tracks">
+                  {cat.tracks.map(t => (
+                    <span key={t.id} className={`mhub-card-track-pill ${playingTrack && playingTrack.id === t.id ? 'mhub-card-track-pill--active' : ''}`}>
+                      {playingTrack && playingTrack.id === t.id && isMusicPlaying ? '♫ ' : ''}{t.title}
+                    </span>
+                  ))}
+                </div>
+                <div className="mhub-card-footer">
+                  <button
+                    className="mhub-card-play-btn"
+                    onClick={() => playTrack(cat.tracks[0], cat.label)}
+                  >▶ Play All</button>
+                  <button
+                    className="mhub-card-view-btn"
+                    onClick={() => setSelectedPlaylistId(cat.id)}
+                  >View Playlist →</button>
+                </div>
+                {activeInCat && (
+                  <div className="mhub-card-now-playing">
+                    <span className="mhub-np-dot" /><span className="mhub-np-dot" /><span className="mhub-np-dot" />
+                    Now playing: {activeInCat.title}
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Saved Favorites */}
+        <div className="mhub-favorites">
+          <h3 className="mhub-favorites-title">❤️ Saved Favorites</h3>
           {favoritedTrackObjects.length === 0 ? (
-            <p className="music-favorites-empty">No favorite tracks yet. Click the 🤍 on any track to save it here.</p>
+            <p className="mhub-favorites-empty">No favorite tracks yet — click 🤍 on any track inside a playlist to save it here.</p>
           ) : (
-            <div className="music-favorites-grid">
+            <div className="mhub-favorites-list">
               {favoritedTrackObjects.map(track => {
                 const cat = musicCategories.find(c => c.id === track.categoryId);
                 const isActive = playingTrack && playingTrack.id === track.id;
                 return (
-                  <div
-                    key={track.id}
-                    className={`music-fav-item ${isActive ? 'active' : ''}`}
-                    style={cat ? { borderColor: cat.accent.border } : {}}
-                  >
-                    <button
-                      className="music-play-btn"
-                      onClick={() => {
-                        if (isActive) setIsMusicPlaying(!isMusicPlaying);
-                        else if (cat) playTrack(track, cat.label);
-                      }}
-                    >
+                  <div key={track.id} className={`mhub-fav-row ${isActive ? 'mhub-fav-row--active' : ''}`} style={cat ? { borderColor: cat.accent.border } : {}}>
+                    <button className="mhub-fav-play" onClick={() => { if (isActive) setIsMusicPlaying(!isMusicPlaying); else if (cat) playTrack(track, cat.label); }}>
                       {isActive && isMusicPlaying ? '⏸' : '▶'}
                     </button>
-                    <div className="music-fav-info">
-                      <span className="music-track-title">{track.title}</span>
-                      {cat && <span className="music-fav-category" style={{ color: cat.accent.color }}>{cat.label}</span>}
+                    <div className="mhub-fav-info">
+                      <span className="mhub-fav-name" style={cat && isActive ? { color: cat.accent.color } : {}}>{track.title}</span>
+                      {cat && <span className="mhub-fav-cat" style={{ color: cat.accent.color }}>{cat.label}</span>}
                     </div>
-                    <span className="music-track-duration">⏱ {track.duration}</span>
-                    <button
-                      className="music-fav-btn active"
-                      onClick={() => toggleFavoriteTrack(track.id)}
-                    >❤️</button>
+                    <span className="mhub-fav-dur">{track.duration}</span>
+                    <button className="mhub-fav-remove" onClick={() => toggleFavoriteTrack(track.id)}>❤️</button>
                   </div>
                 );
               })}
@@ -1390,43 +1440,29 @@ export default function ChatPage({ authToken }) {
           )}
         </div>
 
-        {/* ── Floating Mini Player ── */}
+        {/* Floating Mini Player */}
         {playingTrack && (
-          <div className="music-mini-player">
-            <div className="mini-player-artwork">🎵</div>
-            <div className="mini-player-info">
-              <span className="mini-player-track">{playingTrack.title}</span>
-              <span className="mini-player-category">{playingTrack.categoryLabel}</span>
+          <div className="mhub-mini-player">
+            <div className="mhub-mini-artwork">🎵</div>
+            <div className="mhub-mini-info">
+              <span className="mhub-mini-title">{playingTrack.title}</span>
+              <span className="mhub-mini-cat">{playingTrack.categoryLabel}</span>
             </div>
-            <div className="mini-player-controls">
-              <button className="mini-ctrl-btn" onClick={handlePrevTrack}>⏮</button>
-              <button className="mini-ctrl-btn mini-ctrl-play" onClick={() => setIsMusicPlaying(!isMusicPlaying)}>
-                {isMusicPlaying ? '⏸' : '▶'}
-              </button>
-              <button className="mini-ctrl-btn" onClick={handleNextTrack}>⏭</button>
+            <div className="mhub-mini-progress">
+              <span className="mhub-mini-time">{formatTime(audioCurrentTime)}</span>
+              <input type="range" className="mhub-mini-bar" min="0" max="100" value={trackProgress} onChange={handleProgressChange} />
+              <span className="mhub-mini-time">{playingTrack.duration}</span>
             </div>
-            <div className="mini-player-progress-block">
-              <span className="mini-time">{formatTime(audioCurrentTime)}</span>
-              <input
-                type="range"
-                className="mini-player-progress"
-                min="0" max="100"
-                value={trackProgress}
-                onChange={handleProgressChange}
-              />
-              <span className="mini-time">{playingTrack.duration}</span>
+            <div className="mhub-mini-controls">
+              <button className="mhub-mini-btn" onClick={handlePrevTrack}>⏮</button>
+              <button className="mhub-mini-btn mhub-mini-btn--play" onClick={() => setIsMusicPlaying(!isMusicPlaying)}>{isMusicPlaying ? '⏸' : '▶'}</button>
+              <button className="mhub-mini-btn" onClick={handleNextTrack}>⏭</button>
             </div>
-            <div className="mini-player-volume-block">
+            <div className="mhub-mini-vol">
               <span>🔊</span>
-              <input
-                type="range"
-                className="mini-player-volume"
-                min="0" max="100"
-                value={musicVolume}
-                onChange={handleVolumeChange}
-              />
+              <input type="range" className="mhub-mini-bar" min="0" max="100" value={musicVolume} onChange={handleVolumeChange} />
             </div>
-            <button className="mini-close-btn" onClick={() => { setPlayingTrack(null); setIsMusicPlaying(false); }}>✕</button>
+            <button className="mhub-mini-close" onClick={() => { setPlayingTrack(null); setIsMusicPlaying(false); }}>✕</button>
           </div>
         )}
 
