@@ -1,7 +1,7 @@
 """
 backend/src/app/wellness_service.py
 ───────────────────────────────────
-Wellness cross-device synchronization engine for Novara.
+Wellness cross-device synchronization engine for Elora.
 Supports Google Cloud Firestore as the primary production database with an
 automatic zero-dependency local JSON fallback for offline / local testing
 (e.g., when the Cloud Firestore API is disabled or credentials are not yet linked).

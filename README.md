@@ -1,6 +1,6 @@
-# Novara: A Premium AI Mental-Health Companion 🛡️✨
+# Elora: A Premium AI Mental-Health Companion 🛡️✨
 
-**Novara** is a state-of-the-art, empathy-aware mental health support chatbot designed specifically for students. It combines **Retrieval-Augmented Generation (RAG)** with a personalized memory layer and a robust crisis escalation protocol to provide a safe, supportive, and human-like experience.
+**Elora** is a state-of-the-art, empathy-aware mental health support chatbot designed specifically for students. It combines **Retrieval-Augmented Generation (RAG)** with a personalized memory layer and a robust crisis escalation protocol to provide a safe, supportive, and human-like experience.
 
 ---
 
@@ -104,4 +104,4 @@ To access the **Counselor Dashboard**, navigate to `/admin` in your browser. Thi
 
 ## 🔒 Security & Privacy
 - **Privacy First:** The counselor cannot see your private chats unless a high-risk situation is detected by the AI.
-- **Support-Only:** Novara is a support tool, not a clinical diagnosis or therapy service. Always consult a professional for medical advice.
+- **Support-Only:** Elora is a support tool, not a clinical diagnosis or therapy service. Always consult a professional for medical advice.

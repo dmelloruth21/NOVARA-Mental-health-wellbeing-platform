@@ -283,7 +283,7 @@ export default function Onboarding({ authToken }) {
             <div className="analyzing-spinner" />
             <h1 className="analyzing-title">Curating Your Sanctuary</h1>
             <p className="analyzing-subtitle">
-              Analyzing your psychological profile to tailor Nova's tone and configure your personal dashboard...
+              Analyzing your psychological profile to tailor Elora's tone and configure your personal dashboard...
             </p>
           </div>
         )}

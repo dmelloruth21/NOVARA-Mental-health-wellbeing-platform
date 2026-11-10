@@ -1,6 +1,6 @@
 rules_version = '2';
 
-// Novara Mental Health Platform — Backend-only Firestore Security Rules
+// Elora Mental Health Platform — Backend-only Firestore Security Rules
 // =========================================================================
 // The frontend (React) never connects to Firestore directly. It communicates
 // exclusively through the FastAPI backend (backend/src/app/chat_api.py and

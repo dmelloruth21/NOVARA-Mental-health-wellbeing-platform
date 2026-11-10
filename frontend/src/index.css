@@ -1,6 +1,8 @@
-/* index.css — Novara Design System */
+/* index.css — Elora Design System */
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -14,7 +16,9 @@ body {
   margin: 0;
 }
 
-html, body, #root {
+html,
+body,
+#root {
   min-height: 100%;
   width: 100%;
 }
@@ -28,9 +32,9 @@ html, body, #root {
   --bubble-user-bg: linear-gradient(135deg, #f07060, #e8607a);
   --bubble-user-shadow: rgba(240, 112, 96, 0.25);
   --glass-inner-bg: radial-gradient(circle at 10% 20%, rgba(254, 213, 185, 0.45) 0%, transparent 60%),
-                    radial-gradient(circle at 90% 40%, rgba(251, 196, 216, 0.45) 0%, transparent 60%),
-                    radial-gradient(circle at 50% 90%, rgba(254, 216, 225, 0.4) 0%, transparent 60%),
-                    rgba(255, 255, 255, 0.55);
+    radial-gradient(circle at 90% 40%, rgba(251, 196, 216, 0.45) 0%, transparent 60%),
+    radial-gradient(circle at 50% 90%, rgba(254, 216, 225, 0.4) 0%, transparent 60%),
+    rgba(255, 255, 255, 0.55);
 }
 
 /* Angry Theme — Darker Red */
@@ -42,8 +46,8 @@ body.theme-angry {
   --bubble-user-bg: linear-gradient(135deg, #b91c1c, #7f1d1d);
   --bubble-user-shadow: rgba(185, 28, 28, 0.3);
   --glass-inner-bg: radial-gradient(circle at 10% 20%, rgba(153, 27, 27, 0.4) 0%, transparent 60%),
-                    radial-gradient(circle at 90% 40%, rgba(127, 29, 29, 0.4) 0%, transparent 60%),
-                    rgba(69, 10, 10, 0.7);
+    radial-gradient(circle at 90% 40%, rgba(127, 29, 29, 0.4) 0%, transparent 60%),
+    rgba(69, 10, 10, 0.7);
 }
 
 /* Happy Theme — Soft Pink */
@@ -55,8 +59,8 @@ body.theme-happy {
   --bubble-user-bg: linear-gradient(135deg, #f472b6, #db2777);
   --bubble-user-shadow: rgba(244, 114, 182, 0.3);
   --glass-inner-bg: radial-gradient(circle at 10% 20%, rgba(251, 182, 206, 0.5) 0%, transparent 60%),
-                    radial-gradient(circle at 90% 40%, rgba(244, 114, 182, 0.4) 0%, transparent 60%),
-                    rgba(255, 241, 242, 0.6);
+    radial-gradient(circle at 90% 40%, rgba(244, 114, 182, 0.4) 0%, transparent 60%),
+    rgba(255, 241, 242, 0.6);
 }
 
 /* Night Theme — Darker Blue */
@@ -68,6 +72,6 @@ body.theme-night {
   --bubble-user-bg: linear-gradient(135deg, #3b82f6, #2563eb);
   --bubble-user-shadow: rgba(59, 130, 246, 0.3);
   --glass-inner-bg: radial-gradient(circle at 10% 20%, rgba(30, 58, 138, 0.4) 0%, transparent 60%),
-                    radial-gradient(circle at 90% 40%, rgba(17, 24, 39, 0.4) 0%, transparent 60%),
-                    rgba(15, 23, 42, 0.8);
+    radial-gradient(circle at 90% 40%, rgba(17, 24, 39, 0.4) 0%, transparent 60%),
+    rgba(15, 23, 42, 0.8);
 }

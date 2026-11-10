@@ -108,7 +108,7 @@ export default function Login({ setAuthToken }) {
                 WebkitTextFillColor: 'transparent',
                 display: 'inline-block'
               }}>
-                Novara
+                Elora
               </span>
             </h1>
             <p style={{ color: '#64748b', fontSize: '1.3rem', marginBottom: '50px', fontWeight: '400' }}>

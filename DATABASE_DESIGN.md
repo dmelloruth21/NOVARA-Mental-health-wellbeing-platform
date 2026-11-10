@@ -1,4 +1,4 @@
-# Novara Database Design
+# Elora Database Design
 
 ## 📊 Database Schema Overview
 
@@ -119,12 +119,12 @@ WHERE id = 'session_uuid';
 
 ### PostgreSQL (Production)
 ```env
-POSTGRES_URL="postgresql://username:password@host:5432/novara_db"
+POSTGRES_URL="postgresql://username:password@host:5432/elora_db"
 ```
 
 ### SQLite (Local Development)
 ```env
-POSTGRES_URL="sqlite:///./novara.db"
+POSTGRES_URL="sqlite:///./elora.db"
 ```
 
 The app auto-creates all tables on startup via SQLAlchemy `Base.metadata.create_all()`.

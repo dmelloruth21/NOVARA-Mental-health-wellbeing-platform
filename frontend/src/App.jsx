@@ -70,7 +70,7 @@ export default function App() {
       }}>
         <div style={{ textAlign: 'center' }}>
           <div style={{ fontSize: '2rem', marginBottom: '12px' }}>🌱</div>
-          <p style={{ letterSpacing: '0.05em' }}>Loading Novara...</p>
+          <p style={{ letterSpacing: '0.05em' }}>Loading Elora...</p>
         </div>
       </div>
     );

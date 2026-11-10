@@ -18,8 +18,8 @@ export default function ChatSidebar({ activeTab = 'chat', setActiveTab }) {
     <aside className="chat-sidebar">
       {/* ── Logo ── */}
       <div className="sidebar-logo">
-        <img src="/mascot-transparent.png" alt="Nova mascot" className="sidebar-mascot-logo" />
-        <span className="sidebar-logo-text">Novara</span>
+        <img src="/mascot-transparent.png" alt="Elora mascot" className="sidebar-mascot-logo" />
+        <span className="sidebar-logo-text">Elora</span>
       </div>
 
       <nav className="sidebar-nav">
@@ -30,13 +30,13 @@ export default function ChatSidebar({ activeTab = 'chat', setActiveTab }) {
           <span>Home</span>
         </button>
 
-        {/* Chat With Nova — standalone */}
+        {/* Chat With Elora — standalone */}
         <button 
           className={`sidebar-nav-item ${activeTab === 'chat' ? 'active' : ''}`}
           onClick={() => setActiveTab('chat')}
         >
           <span className="icon">💬</span>
-          <span>Chat With Nova</span>
+          <span>Chat With Elora</span>
         </button>
 
         {/* New Chat — indented box below */}

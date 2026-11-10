@@ -176,8 +176,8 @@ export default function Dashboard({ authToken, currentUser, onLogout }) {
       {/* ──────── Sticky Nav Bar ──────── */}
       <nav className={`hub-navbar ${scrolled ? 'scrolled' : ''}`}>
         <div className="hub-logo">
-          <img src="/mascot.png" alt="Nova mascot" className="hub-logo-icon-img" />
-          <span className="hub-logo-text">Novara</span>
+          <img src="/mascot.png" alt="Elora mascot" className="hub-logo-icon-img" />
+          <span className="hub-logo-text">Elora</span>
         </div>
 
         <div className="hub-nav-links">
@@ -222,12 +222,12 @@ export default function Dashboard({ authToken, currentUser, onLogout }) {
         </div>
         <div className="hero-content">
           <h1 className="hero-title">
-            <span className="hero-brand">Novara</span>
+            <span className="hero-brand">Elora</span>
           </h1>
           <h2 className="hero-subtitle">Your AI Companion for Mental & Emotional Health</h2>
 
           <div className="hero-mascot-container">
-            <img src="/mascot.png" alt="Nova mascot waving hello" className="hero-mascot-img" />
+            <img src="/mascot.png" alt="Elora mascot waving hello" className="hero-mascot-img" />
           </div>
 
           <button className="hero-cta-btn" onClick={() => navigate('/chat?tab=chat')}>
@@ -235,7 +235,7 @@ export default function Dashboard({ authToken, currentUser, onLogout }) {
           </button>
 
           <p className="hero-tagline">
-            Nova is here for you <strong>24/7</strong> — like a friend who listens, a coach who guides, and a bridge to support when you need one. Private and judgment-free!
+            Elora is here for you <strong>24/7</strong> — like a friend who listens, a coach who guides, and a bridge to support when you need one. Private and judgment-free!
           </p>
 
           <div className="hero-stats">
@@ -265,7 +265,7 @@ export default function Dashboard({ authToken, currentUser, onLogout }) {
       {/* ──────── ABOUT VIDEO SECTION ──────── */}
       <section id="section-about" className="hub-section section-about">
         <div ref={aboutRef} className={`reveal-wrapper ${aboutVisible ? 'revealed' : ''}`}>
-          <h2 className="about-title">Meet Nova</h2>
+          <h2 className="about-title">Meet Elora</h2>
           <p className="about-desc">
             I've been through tough times—feeling alone, overwhelmed and stuck in patterns that didn't help.<br />
             With the right support, I learned to understand myself and heal. Now, I'm here for you. To listen, to<br />
@@ -426,7 +426,7 @@ export default function Dashboard({ authToken, currentUser, onLogout }) {
 
       {/* ──────── FOOTER ──────── */}
       <footer className="hub-footer">
-        <div className="hub-footer-logo">🌿 Novara</div>
+        <div className="hub-footer-logo">🌿 Elora</div>
         <p className="hub-footer-tagline">Made with ❤️ for your mental wellness journey</p>
       </footer>
 

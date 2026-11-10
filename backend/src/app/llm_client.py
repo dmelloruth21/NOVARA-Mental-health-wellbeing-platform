@@ -7,7 +7,7 @@ Features:
   1. Hugging Face InferenceClient wrapper with transparent error handling.
   2. Automatic 401 Unauthorized / expired token detection and offline switch.
   3. Offline Mock LLM mode for seamless local development without external APIs.
-  4. Context-aware generation respecting Nova persona (warm, chill, Indian student context, 1-2 emojis).
+  4. Context-aware generation respecting Elora persona (warm, chill, Indian student context, 1-2 emojis).
   5. Built-in support for safety crisis severity evaluation in both live and offline modes.
   6. Token verification helper and health status reporting.
 """
@@ -59,7 +59,7 @@ class MockChatCompletionResponse:
 class MockInferenceClient:
     """
     Offline mock LLM client that generates empathetic, context-aware responses
-    matching Nova's persona without making any network calls.
+    matching Elora's persona without making any network calls.
     """
 
     def __init__(self, model: str = MODEL_NAME):
@@ -118,7 +118,7 @@ class MockInferenceClient:
             return MockChatCompletionResponse("IGNORE")
 
     def _generate_chat_reply(self, messages: list[dict]) -> str:
-        """Generates a warm, friend-like response following Nova's persona."""
+        """Generates a warm, friend-like response following Elora's persona."""
         user_message = messages[-1].get("content", "").strip()
         user_lower = user_message.lower()
 
@@ -172,10 +172,10 @@ class MockInferenceClient:
             ]
             return random.choice(greetings)
 
-        # Bot identity / questions about Nova
+        # Bot identity / questions about Elora
         if any(w in user_lower for w in ["who are you", "what are you", "what can you do", "introduce yourself"]):
             return (
-                "I'm Nova, your wellness ally and friend! 😊 Think of me as a chill, 24/7 college buddy "
+                "I'm Elora, your wellness ally and friend! 😊 Think of me as a chill, 24/7 college buddy "
                 "you can talk to whenever you're stressed, feeling overwhelmed, or just need to vent. "
                 "I'm always right here for you 🫂."
             )

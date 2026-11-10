@@ -161,10 +161,10 @@ def test_sleep_soundboard_mixer_integration():
     assert "/audio/brown_noise.wav" in content
 
     # Verify localStorage keys
-    assert "novara_sleep_rain_vol" in content
-    assert "novara_sleep_forest_vol" in content
-    assert "novara_sleep_ocean_vol" in content
-    assert "novara_sleep_white_vol" in content
+    assert "elora_sleep_rain_vol" in content
+    assert "elora_sleep_forest_vol" in content
+    assert "elora_sleep_ocean_vol" in content
+    assert "elora_sleep_white_vol" in content
 
     # Verify controls
     assert "handleMixerVolChange" in content

@@ -121,7 +121,7 @@ def test_resilient_client_fallback_on_401():
     MockInferenceClient without raising an unhandled exception or returning raw error.
     """
     client = ResilientLLMClient(token="hf_InvalidBadToken401Test")
-    resp = client.chat_completion(messages=[{"role": "user", "content": "Hey Nova"}])
+    resp = client.chat_completion(messages=[{"role": "user", "content": "Hey Elora"}])
     reply = resp.choices[0].message.content
     assert "Model error" not in reply
     assert "401" not in reply
@@ -133,7 +133,7 @@ def test_chat_logic_end_to_end_no_401_crash():
     chat_logic executes full pipeline (router -> retriever -> prompt -> generation -> safety)
     and returns a clean, empathetic response even when HF token is invalid (401).
     """
-    reply = chat_logic("Hey Nova, I've had a really exhausting day at college.", [])
+    reply = chat_logic("Hey Elora, I've had a really exhausting day at college.", [])
     assert isinstance(reply, str)
     assert "Model error: Client error '401 Unauthorized'" not in reply
     assert len(reply) > 20

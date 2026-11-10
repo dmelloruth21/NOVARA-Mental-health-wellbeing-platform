@@ -694,7 +694,7 @@ export default function ChatPage({ authToken, currentUser, onLogout }) {
   const audioRef = useRef(null);
   const [audioCurrentTime, setAudioCurrentTime] = useState(0);
   const [musicVolume, setMusicVolume] = useState(() => {
-    try { return parseInt(localStorage.getItem('novara_music_volume') || '80', 10); } catch { return 80; }
+    try { return parseInt(localStorage.getItem('elora_music_volume') || '80', 10); } catch { return 80; }
   });
   const [favoritedTracks, setFavoritedTracks] = useState(() => wellnessSyncManager.getFavoritedTracks());
   // Stable random recommendation per mount
@@ -715,7 +715,7 @@ export default function ChatPage({ authToken, currentUser, onLogout }) {
   const handleVolumeChange = (e) => {
     const vol = Number(e.target.value);
     setMusicVolume(vol);
-    localStorage.setItem('novara_music_volume', String(vol));
+    localStorage.setItem('elora_music_volume', String(vol));
     if (audioRef.current) audioRef.current.volume = vol / 100;
   };
 
@@ -819,16 +819,16 @@ export default function ChatPage({ authToken, currentUser, onLogout }) {
 
   // ── States & Audio Engine for Unwind Soundboard Mix ─────────
   const [rainVol, setRainVol] = useState(() => {
-    try { return parseInt(localStorage.getItem('novara_sleep_rain_vol') || '40', 10); } catch { return 40; }
+    try { return parseInt(localStorage.getItem('elora_sleep_rain_vol') || '40', 10); } catch { return 40; }
   });
   const [forestVol, setForestVol] = useState(() => {
-    try { return parseInt(localStorage.getItem('novara_sleep_forest_vol') || '0', 10); } catch { return 0; }
+    try { return parseInt(localStorage.getItem('elora_sleep_forest_vol') || '0', 10); } catch { return 0; }
   });
   const [oceanVol, setOceanVol] = useState(() => {
-    try { return parseInt(localStorage.getItem('novara_sleep_ocean_vol') || '20', 10); } catch { return 20; }
+    try { return parseInt(localStorage.getItem('elora_sleep_ocean_vol') || '20', 10); } catch { return 20; }
   });
   const [whiteVol, setWhiteVol] = useState(() => {
-    try { return parseInt(localStorage.getItem('novara_sleep_white_vol') || '0', 10); } catch { return 0; }
+    try { return parseInt(localStorage.getItem('elora_sleep_white_vol') || '0', 10); } catch { return 0; }
   });
   const [isMixerPlaying, setIsMixerPlaying] = useState(false);
   const mixerAudioRef = useRef({ rain: null, forest: null, ocean: null, white: null });
@@ -892,16 +892,16 @@ export default function ChatPage({ authToken, currentUser, onLogout }) {
     const val = Number(value);
     if (channel === 'rain') {
       setRainVol(val);
-      localStorage.setItem('novara_sleep_rain_vol', String(val));
+      localStorage.setItem('elora_sleep_rain_vol', String(val));
     } else if (channel === 'forest') {
       setForestVol(val);
-      localStorage.setItem('novara_sleep_forest_vol', String(val));
+      localStorage.setItem('elora_sleep_forest_vol', String(val));
     } else if (channel === 'ocean') {
       setOceanVol(val);
-      localStorage.setItem('novara_sleep_ocean_vol', String(val));
+      localStorage.setItem('elora_sleep_ocean_vol', String(val));
     } else if (channel === 'white') {
       setWhiteVol(val);
-      localStorage.setItem('novara_sleep_white_vol', String(val));
+      localStorage.setItem('elora_sleep_white_vol', String(val));
     }
     // Auto-start mixer if user raises slider above 0 while paused
     if (!isMixerPlaying && val > 0) {
@@ -915,18 +915,18 @@ export default function ChatPage({ authToken, currentUser, onLogout }) {
     setOceanVol(0);
     setWhiteVol(0);
     setIsMixerPlaying(false);
-    localStorage.setItem('novara_sleep_rain_vol', '0');
-    localStorage.setItem('novara_sleep_forest_vol', '0');
-    localStorage.setItem('novara_sleep_ocean_vol', '0');
-    localStorage.setItem('novara_sleep_white_vol', '0');
+    localStorage.setItem('elora_sleep_rain_vol', '0');
+    localStorage.setItem('elora_sleep_forest_vol', '0');
+    localStorage.setItem('elora_sleep_ocean_vol', '0');
+    localStorage.setItem('elora_sleep_white_vol', '0');
   };
 
   // ── States for Bedtime Story ──────────────────────────────────
   const [currentStoryIndex] = useState(() => {
     try {
-      const visitCount = parseInt(localStorage.getItem('novara_story_visit') || '0', 10);
+      const visitCount = parseInt(localStorage.getItem('elora_story_visit') || '0', 10);
       const nextVisit = visitCount + 1;
-      localStorage.setItem('novara_story_visit', String(nextVisit));
+      localStorage.setItem('elora_story_visit', String(nextVisit));
       return visitCount % bedtimeStories.length;
     } catch {
       return 0;
@@ -990,7 +990,7 @@ export default function ChatPage({ authToken, currentUser, onLogout }) {
   const [plannerTasks, setPlannerTasks] = useState(() => wellnessSyncManager.getPlannerTasks());
 
   const [selectedMood, setSelectedMood] = useState(() => {
-    return localStorage.getItem('novara_daily_mood') || '';
+    return localStorage.getItem('elora_daily_mood') || '';
   });
 
   const handleAddTask = (e) => {
@@ -1013,7 +1013,7 @@ export default function ChatPage({ authToken, currentUser, onLogout }) {
 
   const handleSelectMood = (mood) => {
     setSelectedMood(mood);
-    localStorage.setItem('novara_daily_mood', mood);
+    localStorage.setItem('elora_daily_mood', mood);
   };
 
 
@@ -1058,7 +1058,7 @@ export default function ChatPage({ authToken, currentUser, onLogout }) {
 
           {/* Card 2: Fortune Affirmations Deck */}
           <div className="panel-card fortune-deck-card">
-            <h3>🔮 Nova Wisdom Cards</h3>
+            <h3>🔮 Elora Wisdom Cards</h3>
             <p className="card-sub">Draw a wellness quote card to guide your day.</p>
 
             <div className="fortune-shuffler-content">
@@ -2012,7 +2012,7 @@ export default function ChatPage({ authToken, currentUser, onLogout }) {
                 <div className="chat-empty-state">
                   <AnimatedMascot />
                   <div className="empty-state-card">
-                    Hi, I am Nova, your daily AI Mental Health Companion! 🌻
+                    Hi, I am Elora, your daily AI Mental Health Companion! 🌻
                   </div>
                   <div className="empty-state-card">
                     So tell me how's it going? Anything on your mind lately.
@@ -2047,7 +2047,7 @@ export default function ChatPage({ authToken, currentUser, onLogout }) {
                 <span className="attachment-icon">📎</span>
                 <input
                   type="text"
-                  placeholder="Ask Nova..."
+                  placeholder="Ask Elora..."
                   value={inputText}
                   onChange={(e) => setInputText(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
@@ -2057,7 +2057,7 @@ export default function ChatPage({ authToken, currentUser, onLogout }) {
                 </button>
               </div>
               <p className="disclaimer">
-                Disclaimer: Nova offers support, not medical care. Always consult a professional.
+                Disclaimer: Elora offers support, not medical care. Always consult a professional.
               </p>
             </div>
           </>

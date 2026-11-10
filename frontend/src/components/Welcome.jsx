@@ -31,7 +31,7 @@ export default function Welcome() {
 
         {/* Description */}
         <p className="welcome-description">
-          Nova is your personal mental wellness companion — a safe,
+          Elora is your personal mental wellness companion — a safe,
           judgment-free space to express yourself, track your feelings,
           and discover tools that help you thrive every day.
         </p>

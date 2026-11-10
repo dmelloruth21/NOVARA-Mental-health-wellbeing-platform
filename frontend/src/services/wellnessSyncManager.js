@@ -1,7 +1,7 @@
 /**
  * frontend/src/services/wellnessSyncManager.js
  * ─────────────────────────────────────────────
- * Cross-device synchronization manager for Novara.
+ * Cross-device synchronization manager for Elora.
  *
  * Responsibilities:
  *  - Namespaces browser localStorage per authenticated Firebase UID
@@ -88,9 +88,9 @@ class WellnessSyncManager {
 
   _getKey(name) {
     if (this.currentUid) {
-      return `novara_${name}_${this.currentUid}`;
+      return `elora_${name}_${this.currentUid}`;
     }
-    return `novara_${name}_guest`;
+    return `elora_${name}_guest`;
   }
 
   _getMeta() {
@@ -553,14 +553,14 @@ class WellnessSyncManager {
   async checkAndMigrateLegacy() {
     if (!this.currentUid || !this.authToken) return;
 
-    const migrationKey = `novara_legacy_migrated_${this.currentUid}`;
+    const migrationKey = `elora_legacy_migrated_${this.currentUid}`;
     if (localStorage.getItem(migrationKey)) return;
 
     // Check if un-namespaced legacy keys exist
-    const oldPlanner = localStorage.getItem('novara_planner_tasks');
-    const oldQuotes = localStorage.getItem('novara_saved_quotes');
-    const oldGratitudes = localStorage.getItem('novara_gratitudes');
-    const oldTracks = localStorage.getItem('novara_favorited_tracks');
+    const oldPlanner = localStorage.getItem('elora_planner_tasks');
+    const oldQuotes = localStorage.getItem('elora_saved_quotes');
+    const oldGratitudes = localStorage.getItem('elora_gratitudes');
+    const oldTracks = localStorage.getItem('elora_favorited_tracks');
 
     if (!oldPlanner && !oldQuotes && !oldGratitudes && !oldTracks) {
       localStorage.setItem(migrationKey, 'true');
@@ -603,10 +603,10 @@ class WellnessSyncManager {
         }
 
         // Clean un-namespaced keys to avoid cross-user contamination
-        localStorage.removeItem('novara_planner_tasks');
-        localStorage.removeItem('novara_saved_quotes');
-        localStorage.removeItem('novara_gratitudes');
-        localStorage.removeItem('novara_favorited_tracks');
+        localStorage.removeItem('elora_planner_tasks');
+        localStorage.removeItem('elora_saved_quotes');
+        localStorage.removeItem('elora_gratitudes');
+        localStorage.removeItem('elora_favorited_tracks');
       }
     } catch (e) {
       console.warn('Legacy import deferred:', e.message);

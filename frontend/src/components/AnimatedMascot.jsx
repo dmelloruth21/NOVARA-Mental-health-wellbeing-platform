@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import './AnimatedMascot.css';
 
 const GREETING_LINES = [
-  "Hi! I'm Nova 🌻",
+  "Hi! I'm Elora 🌻",
   "I'm here for you, always.",
   "What's on your mind today?",
 ];
@@ -80,7 +80,7 @@ export default function AnimatedMascot() {
         {/* The mascot image — floats gently */}
         <motion.img
           src="/mascot-transparent.png"
-          alt="Nova mascot"
+          alt="Elora mascot"
           className="mascot-anim-img"
           animate={{ y: [0, -10, 0] }}
           transition={{
