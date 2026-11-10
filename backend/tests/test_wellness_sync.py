@@ -9,6 +9,22 @@ Verifies:
   - Per-field Last-Write-Wins (LWW) conflict resolution
   - Batch legacy import with deterministic hashing
   - GDPR/privacy full deletion
+
+Firestore Targeting Note
+────────────────────────
+After Cloud Firestore enablement on the `myallycustom` project, these tests
+hit the REAL cloud Firestore database (for the dev UID "dev-user-123").
+The setup/teardown functions clean up after each test, so no data persists.
+
+For CI/CD pipelines or offline local development that should NOT touch live
+cloud Firestore, start the Firestore Emulator and set the environment
+variable:
+
+    FIRESTORE_EMULATOR_HOST=localhost:8080
+
+When this variable is set, firebase_admin automatically routes all Firestore
+calls to the local emulator instead of the cloud. No code changes are needed.
+(Emulator setup/installation is out of scope here — this is guidance only.)
 """
 
 import sys

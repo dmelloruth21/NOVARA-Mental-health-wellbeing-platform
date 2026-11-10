@@ -145,6 +145,16 @@ class LocalWellnessStore:
 
 # ── Cloud Firestore Engine ─────────────────────────────────────────────────────
 
+# Free Tier Limits (Spark plan): 50,000 reads/day, 20,000 writes/day,
+# 20,000 deletes/day, 1 GiB stored data. Monitor usage in the Firebase Console
+# (Usage tab) if operating at scale; the local JSON fallback has no such limits.
+#
+# Rollback / Disablement: If Cloud Firestore becomes unreachable or needs to
+# be disabled, the backend automatically falls back to local JSON storage
+# (database/wellness_local/{uid}/) via LocalWellnessStore with zero downtime
+# and no code changes. The probe in get_firestore_client() below detects this
+# on the first wellness request and caches the result for the process lifetime.
+
 _firestore_client = None
 _firestore_checked = False
 _firestore_available = False
