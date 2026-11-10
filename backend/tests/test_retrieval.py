@@ -93,4 +93,4 @@ def test_classify_intent_high_risk_overrides_knowledge():
 def test_classify_intent_returns_string():
     result = classify_intent("Hello")
     assert isinstance(result, str)
-    assert result in ("high_risk", "knowledge_seeking", "mixed", "support_only")
+    assert result in ("high_risk", "knowledge_seeking", "mixed", "support_only", "greeting")

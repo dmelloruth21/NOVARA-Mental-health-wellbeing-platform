@@ -24,7 +24,7 @@ function useScrollReveal(threshold = 0.15) {
   return [ref, visible];
 }
 
-export default function Dashboard({ authToken }) {
+export default function Dashboard({ authToken, currentUser, onLogout }) {
   const navigate = useNavigate();
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
@@ -199,7 +199,14 @@ export default function Dashboard({ authToken }) {
         <div className="hub-nav-actions">
           <button
             className="hub-auth-btn"
-            onClick={() => authToken ? navigate('/') : navigate('/login')}
+            onClick={async () => {
+              if (authToken) {
+                if (onLogout) await onLogout();
+                navigate('/');
+              } else {
+                navigate('/login');
+              }
+            }}
           >
             {authToken ? '🚪 Log Out' : '✨ Sign In to Save'}
           </button>

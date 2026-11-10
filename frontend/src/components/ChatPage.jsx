@@ -4,6 +4,7 @@ import ChatSidebar from './ChatSidebar';
 import ChatHeader from './ChatHeader';
 import AnimatedMascot from './AnimatedMascot';
 import { detectThemeFromText } from '../themes';
+import { wellnessSyncManager } from '../services/wellnessSyncManager';
 import './ChatPage.css';
 
 // ── Static Datasets ──────────────────────────────────────────
@@ -376,59 +377,77 @@ const quizQuestions = [
 
 const musicCategories = [
   {
-    id: 'focus',
-    label: '🎓 Study Focus',
-    icon: '📚',
-    description: 'Designed for deep work, coding sessions, assignments, and exam preparation.',
-    duration: '20–30 mins',
+    id: 'rain',
+    label: '🌧️ Rain & Storms',
+    icon: '🌧️',
+    description: 'Gentle steady rain, rooftop showers, and soothing stormy ambiance to calm an overactive mind.',
+    duration: '11+ mins',
     accent: { color: '#38bdf8', bg: 'rgba(56, 189, 248, 0.08)', border: 'rgba(56, 189, 248, 0.2)', glow: 'rgba(56, 189, 248, 0.15)' },
     tracks: [
-      { id: 'focus-1', title: 'Deep Focus Flow', duration: '25 min', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3' },
-      { id: 'focus-2', title: 'Coding Zone', duration: '22 min', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3' },
-      { id: 'focus-3', title: 'Exam Prep Ambient', duration: '28 min', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3' },
-      { id: 'focus-4', title: 'Library Ambience', duration: '30 min', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3' },
+      { id: 'rain-1', title: 'Gentle Rain Ambience', duration: '6:35 min', url: '/audio/rain.mp3' },
+      { id: 'rain-2', title: 'Rain on the Roof', duration: '4:46 min', url: '/audio/rain_on_roof.mp3' },
+    ]
+  },
+  {
+    id: 'nature',
+    label: '🍃 Nature & Wilderness',
+    icon: '🌲',
+    description: 'Fresh forest winds, bird songs, rolling ocean tides, and crackling campfires.',
+    duration: '14+ mins',
+    accent: { color: '#34d399', bg: 'rgba(52, 211, 153, 0.08)', border: 'rgba(52, 211, 153, 0.2)', glow: 'rgba(52, 211, 153, 0.15)' },
+    tracks: [
+      { id: 'nat-1', title: 'Forest Birds & Breeze', duration: '3:08 min', url: '/audio/forest_sounds.mp3' },
+      { id: 'nat-2', title: 'Ocean Waves & Tide', duration: '1:04 min', url: '/audio/ocean_waves.mp3' },
+      { id: 'nat-3', title: 'Cozy Campfire Crackle', duration: '4:39 min', url: '/audio/campfire.mp3' },
+    ]
+  },
+  {
+    id: 'piano',
+    label: '🎹 Peaceful Piano',
+    icon: '🎹',
+    description: 'Soft, flowing acoustic piano reflections and soothing melodic keys to dissolve mental tension.',
+    duration: '6+ mins',
+    accent: { color: '#67e8f9', bg: 'rgba(103, 232, 249, 0.08)', border: 'rgba(103, 232, 249, 0.2)', glow: 'rgba(103, 232, 249, 0.15)' },
+    tracks: [
+      { id: 'piano-1', title: 'Gentle Piano Reflections', duration: '3:09 min', url: '/audio/gentle_piano.mp3' },
+      { id: 'piano-2', title: 'Midnight Keys Harmony', duration: '3:09 min', url: '/audio/gentle_piano.mp3' },
+    ]
+  },
+  {
+    id: 'lofi',
+    label: '🎧 Lo-Fi Chill & Focus',
+    icon: '☕',
+    description: 'Warm downtempo beats, mellow Rhodes chords, and cozy study rhythms for flow state.',
+    duration: '11+ mins',
+    accent: { color: '#f59e0b', bg: 'rgba(245, 158, 11, 0.08)', border: 'rgba(245, 158, 11, 0.2)', glow: 'rgba(245, 158, 11, 0.15)' },
+    tracks: [
+      { id: 'lofi-1', title: 'Lo-Fi Chill & Study Beat', duration: '5:50 min', url: '/audio/lofi_study.mp3' },
+      { id: 'lofi-2', title: 'Deep Focus Flow', duration: '5:50 min', url: '/audio/lofi_study.mp3' },
+    ]
+  },
+  {
+    id: 'whitenoise',
+    label: '🌊 White & Ambient Noise',
+    icon: '📡',
+    description: 'Calibrated sound spectrums (white, brown, pink) to mask distractions and calm ADHD/restless minds.',
+    duration: 'Continuous loops',
+    accent: { color: '#818cf8', bg: 'rgba(129, 140, 248, 0.08)', border: 'rgba(129, 140, 248, 0.2)', glow: 'rgba(129, 140, 248, 0.18)' },
+    tracks: [
+      { id: 'noise-1', title: 'Deep Brown Noise (ADHD & Sleep)', duration: 'Seamless Loop', url: '/audio/brown_noise.wav' },
+      { id: 'noise-2', title: 'Pure White Noise', duration: 'Seamless Loop', url: '/audio/white_noise.wav' },
+      { id: 'noise-3', title: 'Soothing Pink Noise', duration: 'Seamless Loop', url: '/audio/pink_noise.wav' },
     ]
   },
   {
     id: 'meditation',
     label: '🧘 Meditation & Mindfulness',
     icon: '🧘',
-    description: 'Slow your thoughts and reconnect with the present moment.',
-    duration: '5–10 mins',
+    description: 'Resonant Tibetan singing bowls and meditative chime harmonics to deepen breath awareness.',
+    duration: '11+ mins',
     accent: { color: '#a78bfa', bg: 'rgba(167, 139, 250, 0.08)', border: 'rgba(167, 139, 250, 0.2)', glow: 'rgba(167, 139, 250, 0.15)' },
     tracks: [
-      { id: 'med-1', title: 'Zen Garden Meditation', duration: '8 min', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
-      { id: 'med-2', title: 'Floating Clouds', duration: '6 min', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3' },
-      { id: 'med-3', title: 'Mountain Stillness', duration: '10 min', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3' },
-      { id: 'med-4', title: 'Mindful Breathing', duration: '5 min', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3' },
-    ]
-  },
-  {
-    id: 'anxiety',
-    label: '💙 Anxiety Relief & Calm',
-    icon: '💙',
-    description: 'Reduce mental clutter and create emotional calm.',
-    duration: '7–8 mins',
-    accent: { color: '#67e8f9', bg: 'rgba(103, 232, 249, 0.08)', border: 'rgba(103, 232, 249, 0.2)', glow: 'rgba(103, 232, 249, 0.15)' },
-    tracks: [
-      { id: 'anx-1', title: 'Calm Waters', duration: '8 min', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3' },
-      { id: 'anx-2', title: 'Gentle Piano Reflections', duration: '7 min', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3' },
-      { id: 'anx-3', title: 'Soft Rain Therapy', duration: '8 min', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3' },
-      { id: 'anx-4', title: 'Peaceful Evening', duration: '7 min', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3' },
-    ]
-  },
-  {
-    id: 'sleep',
-    label: '😴 Sleep & Relaxation',
-    icon: '🌙',
-    description: 'Prepare your mind and body for restful, deep sleep.',
-    duration: '20–40 mins',
-    accent: { color: '#818cf8', bg: 'rgba(129, 140, 248, 0.08)', border: 'rgba(129, 140, 248, 0.2)', glow: 'rgba(129, 140, 248, 0.18)' },
-    tracks: [
-      { id: 'sleep-1', title: 'Moonlight Melody', duration: '35 min', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-13.mp3' },
-      { id: 'sleep-2', title: 'Ocean Dreams', duration: '40 min', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-14.mp3' },
-      { id: 'sleep-3', title: 'Midnight Lullaby', duration: '25 min', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3' },
-      { id: 'sleep-4', title: 'Rainy Night', duration: '20 min', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-16.mp3' },
+      { id: 'med-1', title: 'Zen Singing Bowls & Bells', duration: '5:45 min', url: '/audio/zen_meditation.mp3' },
+      { id: 'med-2', title: 'Mindful Breathing Bell', duration: '5:45 min', url: '/audio/zen_meditation.mp3' },
     ]
   }
 ];
@@ -439,19 +458,23 @@ const allTracksFlat = musicCategories.flatMap(cat =>
 );
 
 const musicRecommendations = [
-  { mood: 'distracted', text: 'Feeling distracted?', track: 'Deep Focus Flow', hint: 'Try a deep focus session to lock in.' },
-  { mood: 'overwhelmed', text: 'Feeling overwhelmed?', track: 'Calm Waters', hint: 'Let calm sounds ease your mind.' },
-  { mood: 'sleepy', text: 'Need better sleep tonight?', track: 'Moonlight Melody', hint: 'Drift off with a soft lullaby soundscape.' },
-  { mood: 'anxious', text: 'Feeling anxious?', track: 'Soft Rain Therapy', hint: 'Rain sounds are proven to calm the nervous system.' },
-  { mood: 'coding', text: 'Got a coding session?', track: 'Coding Zone', hint: 'Block out noise and get into flow.' },
+  { mood: 'distracted', text: 'Feeling distracted?', track: 'Deep Focus Flow', hint: 'Lock in with warm lo-fi study beats.' },
+  { mood: 'overwhelmed', text: 'Feeling overwhelmed?', track: 'Gentle Rain Ambience', hint: 'Rain sounds are proven to calm the nervous system.' },
+  { mood: 'sleepy', text: 'Need better sleep tonight?', track: 'Deep Brown Noise (ADHD & Sleep)', hint: 'Deep lower frequencies help slow down active brain waves.' },
+  { mood: 'anxious', text: 'Feeling anxious?', track: 'Rain on the Roof', hint: 'Soothing steady raindrops ease mental tension.' },
+  { mood: 'coding', text: 'Got a coding session?', track: 'Lo-Fi Chill & Study Beat', hint: 'Block out background noise and enter the flow state.' },
   { mood: 'stressed', text: 'Feeling stressed?', track: 'Gentle Piano Reflections', hint: 'Soft piano melodies melt tension away.' },
-  { mood: 'unfocused', text: 'Struggling to concentrate?', track: 'Deep Focus Flow', hint: 'Frequency-tuned audio for sharper attention.' },
-  { mood: 'peaceful', text: 'Want inner peace?', track: 'Zen Garden Meditation', hint: 'Center yourself with a mindful meditation.' },
+  { mood: 'unfocused', text: 'Struggling to concentrate?', track: 'Pure White Noise', hint: 'Consistent frequency masking for sharper attention.' },
+  { mood: 'peaceful', text: 'Want inner peace?', track: 'Zen Singing Bowls & Bells', hint: 'Center yourself with mindful meditation bells.' },
 ];
 
 
 
-export default function ChatPage({ authToken }) {
+export default function ChatPage({ authToken, currentUser, onLogout }) {
+  // Sync manager bootstrap
+  useEffect(() => {
+    wellnessSyncManager.setUser(currentUser, authToken);
+  }, [currentUser, authToken]);
   // URL tab search parameter
   const [searchParams, setSearchParams] = useSearchParams();
   const activeTab = searchParams.get('tab') || 'chat';
@@ -565,25 +588,21 @@ export default function ChatPage({ authToken }) {
   const [breathTimer, setBreathTimer] = useState(4);
   const [isFlipped, setIsFlipped] = useState(false);
   const [currentQuote, setCurrentQuote] = useState(null);
-  const [savedQuotes, setSavedQuotes] = useState(() => {
-    try {
-      const saved = localStorage.getItem('novara_saved_quotes');
-      return saved ? JSON.parse(saved) : [];
-    } catch {
-      return [];
-    }
-  });
-
+  const [savedQuotes, setSavedQuotes] = useState(() => wellnessSyncManager.getSavedQuotes());
   const [gratitudeInput, setGratitudeInput] = useState('');
-  const [gratitudes, setGratitudes] = useState(() => {
-    try {
-      const saved = localStorage.getItem('novara_gratitudes');
-      return saved ? JSON.parse(saved) : [];
-    } catch {
-      return [];
-    }
-  });
+  const [gratitudes, setGratitudes] = useState(() => wellnessSyncManager.getGratitudes());
   const [isJarAnimating, setIsJarAnimating] = useState(false);
+
+  // Subscribe to sync manager updates
+  useEffect(() => {
+    const unsubscribe = wellnessSyncManager.subscribe(() => {
+      setSavedQuotes(wellnessSyncManager.getSavedQuotes());
+      setGratitudes(wellnessSyncManager.getGratitudes());
+      setFavoritedTracks(wellnessSyncManager.getFavoritedTracks());
+      setPlannerTasks(wellnessSyncManager.getPlannerTasks());
+    });
+    return () => unsubscribe();
+  }, []);
 
   // Breathing timer loop
   useEffect(() => {
@@ -618,17 +637,13 @@ export default function ChatPage({ authToken }) {
   };
 
   const handleSaveQuote = (quote) => {
-    if (!savedQuotes.some(q => q.text === quote.text)) {
-      const updated = [...savedQuotes, quote];
-      setSavedQuotes(updated);
-      localStorage.setItem('novara_saved_quotes', JSON.stringify(updated));
-    }
+    wellnessSyncManager.saveQuote(quote);
+    setSavedQuotes(wellnessSyncManager.getSavedQuotes());
   };
 
   const handleRemoveQuote = (text) => {
-    const updated = savedQuotes.filter(q => q.text !== text);
-    setSavedQuotes(updated);
-    localStorage.setItem('novara_saved_quotes', JSON.stringify(updated));
+    wellnessSyncManager.removeQuote(text);
+    setSavedQuotes(wellnessSyncManager.getSavedQuotes());
   };
 
   const handleDropGratitude = (e) => {
@@ -638,9 +653,8 @@ export default function ChatPage({ authToken }) {
     const text = gratitudeInput.trim();
     setGratitudeInput('');
     setTimeout(() => {
-      const updated = [text, ...gratitudes];
-      setGratitudes(updated);
-      localStorage.setItem('novara_gratitudes', JSON.stringify(updated));
+      wellnessSyncManager.addGratitude(text);
+      setGratitudes(wellnessSyncManager.getGratitudes());
       setIsJarAnimating(false);
     }, 800);
   };
@@ -682,12 +696,7 @@ export default function ChatPage({ authToken }) {
   const [musicVolume, setMusicVolume] = useState(() => {
     try { return parseInt(localStorage.getItem('novara_music_volume') || '80', 10); } catch { return 80; }
   });
-  const [favoritedTracks, setFavoritedTracks] = useState(() => {
-    try {
-      const saved = localStorage.getItem('novara_favorited_tracks');
-      return saved ? JSON.parse(saved) : [];
-    } catch { return []; }
-  });
+  const [favoritedTracks, setFavoritedTracks] = useState(() => wellnessSyncManager.getFavoritedTracks());
   // Stable random recommendation per mount
   const [todayRecommendation] = useState(() =>
     musicRecommendations[Math.floor(Math.random() * musicRecommendations.length)]
@@ -718,15 +727,14 @@ export default function ChatPage({ authToken }) {
   };
 
   const toggleFavoriteTrack = (id) => {
-    let updated;
-    if (favoritedTracks.includes(id)) {
-      updated = favoritedTracks.filter(tid => tid !== id);
-    } else {
-      updated = [...favoritedTracks, id];
-    }
-    setFavoritedTracks(updated);
-    localStorage.setItem('novara_favorited_tracks', JSON.stringify(updated));
+    wellnessSyncManager.toggleFavoriteTrack(id);
+    setFavoritedTracks(wellnessSyncManager.getFavoritedTracks());
   };
+
+  const playingTrackRef = useRef(playingTrack);
+  useEffect(() => {
+    playingTrackRef.current = playingTrack;
+  }, [playingTrack]);
 
   const playTrack = (track, categoryLabel) => {
     setPlayingTrack({ ...track, categoryLabel });
@@ -734,8 +742,9 @@ export default function ChatPage({ authToken }) {
   };
 
   const handlePrevTrack = () => {
-    if (!playingTrack) return;
-    const idx = allTracksFlat.findIndex(t => t.id === playingTrack.id);
+    const current = playingTrackRef.current;
+    if (!current) return;
+    const idx = allTracksFlat.findIndex(t => t.id === current.id);
     const prevIdx = idx <= 0 ? allTracksFlat.length - 1 : idx - 1;
     const prev = allTracksFlat[prevIdx];
     const cat = musicCategories.find(c => c.id === prev.categoryId);
@@ -744,8 +753,9 @@ export default function ChatPage({ authToken }) {
   };
 
   const handleNextTrack = () => {
-    if (!playingTrack) return;
-    const idx = allTracksFlat.findIndex(t => t.id === playingTrack.id);
+    const current = playingTrackRef.current;
+    if (!current) return;
+    const idx = allTracksFlat.findIndex(t => t.id === current.id);
     const nextIdx = idx >= allTracksFlat.length - 1 ? 0 : idx + 1;
     const next = allTracksFlat[nextIdx];
     const cat = musicCategories.find(c => c.id === next.categoryId);
@@ -766,15 +776,21 @@ export default function ChatPage({ authToken }) {
       }
     };
     const handleEnded = () => handleNextTrack();
+    const handleLoaded = () => {
+      setTrackProgress(0);
+      setAudioCurrentTime(0);
+    };
 
     audioRef.current.addEventListener('timeupdate', handleTimeUpdate);
     audioRef.current.addEventListener('ended', handleEnded);
+    audioRef.current.addEventListener('loadedmetadata', handleLoaded);
 
     return () => {
       if (audioRef.current) {
         audioRef.current.pause();
         audioRef.current.removeEventListener('timeupdate', handleTimeUpdate);
         audioRef.current.removeEventListener('ended', handleEnded);
+        audioRef.current.removeEventListener('loadedmetadata', handleLoaded);
       }
     };
   }, []);
@@ -790,7 +806,7 @@ export default function ChatPage({ authToken }) {
       }
       if (isMusicPlaying) {
         audioRef.current.play().catch(err => {
-          console.warn('Autoplay blocked:', err);
+          console.warn('Playback interrupted or blocked:', err);
           setIsMusicPlaying(false);
         });
       } else {
@@ -801,11 +817,109 @@ export default function ChatPage({ authToken }) {
     }
   }, [playingTrack, isMusicPlaying]);
 
-  // ── States for Unwind Soundboard Mix ─────────────────────────
-  const [rainVol, setRainVol] = useState(40);
-  const [forestVol, setForestVol] = useState(0);
-  const [oceanVol, setOceanVol] = useState(20);
-  const [whiteVol, setWhiteVol] = useState(0);
+  // ── States & Audio Engine for Unwind Soundboard Mix ─────────
+  const [rainVol, setRainVol] = useState(() => {
+    try { return parseInt(localStorage.getItem('novara_sleep_rain_vol') || '40', 10); } catch { return 40; }
+  });
+  const [forestVol, setForestVol] = useState(() => {
+    try { return parseInt(localStorage.getItem('novara_sleep_forest_vol') || '0', 10); } catch { return 0; }
+  });
+  const [oceanVol, setOceanVol] = useState(() => {
+    try { return parseInt(localStorage.getItem('novara_sleep_ocean_vol') || '20', 10); } catch { return 20; }
+  });
+  const [whiteVol, setWhiteVol] = useState(() => {
+    try { return parseInt(localStorage.getItem('novara_sleep_white_vol') || '0', 10); } catch { return 0; }
+  });
+  const [isMixerPlaying, setIsMixerPlaying] = useState(false);
+  const mixerAudioRef = useRef({ rain: null, forest: null, ocean: null, white: null });
+
+  // Initialize Soundboard mixer looping audio elements
+  useEffect(() => {
+    const rainAudio = new Audio('/audio/rain.mp3');
+    const forestAudio = new Audio('/audio/forest_sounds.mp3');
+    const oceanAudio = new Audio('/audio/ocean_waves.mp3');
+    const whiteAudio = new Audio('/audio/brown_noise.wav');
+
+    [rainAudio, forestAudio, oceanAudio, whiteAudio].forEach(audio => {
+      audio.loop = true;
+      audio.preload = 'metadata';
+    });
+
+    mixerAudioRef.current = {
+      rain: rainAudio,
+      forest: forestAudio,
+      ocean: oceanAudio,
+      white: whiteAudio,
+    };
+
+    return () => {
+      [rainAudio, forestAudio, oceanAudio, whiteAudio].forEach(audio => {
+        try {
+          audio.pause();
+          audio.src = '';
+        } catch (e) {}
+      });
+    };
+  }, []);
+
+  // Sync mixer playback & volume channels
+  useEffect(() => {
+    const { rain, forest, ocean, white } = mixerAudioRef.current;
+    if (!rain) return;
+
+    const channels = [
+      { audio: rain, vol: rainVol },
+      { audio: forest, vol: forestVol },
+      { audio: ocean, vol: oceanVol },
+      { audio: white, vol: whiteVol },
+    ];
+
+    channels.forEach(({ audio, vol }) => {
+      audio.volume = Math.max(0, Math.min(1, vol / 100));
+      if (isMixerPlaying && vol > 0) {
+        if (audio.paused) {
+          audio.play().catch(err => console.warn('Mixer play blocked:', err));
+        }
+      } else {
+        if (!audio.paused) {
+          audio.pause();
+        }
+      }
+    });
+  }, [isMixerPlaying, rainVol, forestVol, oceanVol, whiteVol]);
+
+  const handleMixerVolChange = (channel, value) => {
+    const val = Number(value);
+    if (channel === 'rain') {
+      setRainVol(val);
+      localStorage.setItem('novara_sleep_rain_vol', String(val));
+    } else if (channel === 'forest') {
+      setForestVol(val);
+      localStorage.setItem('novara_sleep_forest_vol', String(val));
+    } else if (channel === 'ocean') {
+      setOceanVol(val);
+      localStorage.setItem('novara_sleep_ocean_vol', String(val));
+    } else if (channel === 'white') {
+      setWhiteVol(val);
+      localStorage.setItem('novara_sleep_white_vol', String(val));
+    }
+    // Auto-start mixer if user raises slider above 0 while paused
+    if (!isMixerPlaying && val > 0) {
+      setIsMixerPlaying(true);
+    }
+  };
+
+  const handleMuteAllMixer = () => {
+    setRainVol(0);
+    setForestVol(0);
+    setOceanVol(0);
+    setWhiteVol(0);
+    setIsMixerPlaying(false);
+    localStorage.setItem('novara_sleep_rain_vol', '0');
+    localStorage.setItem('novara_sleep_forest_vol', '0');
+    localStorage.setItem('novara_sleep_ocean_vol', '0');
+    localStorage.setItem('novara_sleep_white_vol', '0');
+  };
 
   // ── States for Bedtime Story ──────────────────────────────────
   const [currentStoryIndex] = useState(() => {
@@ -873,19 +987,7 @@ export default function ChatPage({ authToken }) {
 
   // ── States for Daily Planner Plan Ur Day ─────────────────────
   const [newTaskText, setNewTaskText] = useState('');
-  const [plannerTasks, setPlannerTasks] = useState(() => {
-    try {
-      const saved = localStorage.getItem('novara_planner_tasks');
-      return saved ? JSON.parse(saved) : [
-        { id: 1, text: "Complete DBMS assignment", completed: false },
-        { id: 2, text: "Drink 2 litres of water", completed: true },
-        { id: 3, text: "Take a 15 minute walk", completed: true },
-        { id: 4, text: "Revise DAA concepts", completed: true }
-      ];
-    } catch {
-      return [];
-    }
-  });
+  const [plannerTasks, setPlannerTasks] = useState(() => wellnessSyncManager.getPlannerTasks());
 
   const [selectedMood, setSelectedMood] = useState(() => {
     return localStorage.getItem('novara_daily_mood') || '';
@@ -894,27 +996,19 @@ export default function ChatPage({ authToken }) {
   const handleAddTask = (e) => {
     e.preventDefault();
     if (!newTaskText.trim()) return;
-    const newTask = {
-      id: Date.now(),
-      text: newTaskText.trim(),
-      completed: false
-    };
-    const updated = [...plannerTasks, newTask];
-    setPlannerTasks(updated);
-    localStorage.setItem('novara_planner_tasks', JSON.stringify(updated));
+    wellnessSyncManager.addPlannerTask(newTaskText);
+    setPlannerTasks(wellnessSyncManager.getPlannerTasks());
     setNewTaskText('');
   };
 
   const handleToggleTask = (id) => {
-    const updated = plannerTasks.map(t => t.id === id ? { ...t, completed: !t.completed } : t);
-    setPlannerTasks(updated);
-    localStorage.setItem('novara_planner_tasks', JSON.stringify(updated));
+    wellnessSyncManager.togglePlannerTask(id);
+    setPlannerTasks(wellnessSyncManager.getPlannerTasks());
   };
 
   const handleDeleteTask = (id) => {
-    const updated = plannerTasks.filter(t => t.id !== id);
-    setPlannerTasks(updated);
-    localStorage.setItem('novara_planner_tasks', JSON.stringify(updated));
+    wellnessSyncManager.deletePlannerTask(id);
+    setPlannerTasks(wellnessSyncManager.getPlannerTasks());
   };
 
   const handleSelectMood = (mood) => {
@@ -1315,7 +1409,7 @@ export default function ChatPage({ authToken }) {
               <div className="mhub-mini-progress">
                 <span className="mhub-mini-time">{formatTime(audioCurrentTime)}</span>
                 <input type="range" className="mhub-mini-bar" min="0" max="100" value={trackProgress} onChange={handleProgressChange} />
-                <span className="mhub-mini-time">{playingTrack.duration}</span>
+                <span className="mhub-mini-time">{audioRef.current?.duration && !isNaN(audioRef.current.duration) ? formatTime(audioRef.current.duration) : playingTrack.duration}</span>
               </div>
               <div className="mhub-mini-controls">
                 <button className="mhub-mini-btn" onClick={handlePrevTrack}>⏮</button>
@@ -1344,9 +1438,9 @@ export default function ChatPage({ authToken }) {
             <p className="mhub-subtitle">Curated soundscapes to help you focus, relax, recharge, and sleep better.</p>
           </div>
           <div className="mhub-header-chips">
-            <span className="mhub-chip">🎵 16+ Tracks</span>
-            <span className="mhub-chip">📂 4 Playlists</span>
-            <span className="mhub-chip">🧘 Wellness</span>
+            <span className="mhub-chip">🎵 {allTracksFlat.length} Tracks</span>
+            <span className="mhub-chip">📂 {musicCategories.length} Playlists</span>
+            <span className="mhub-chip">🧘 100% Royalty-Free</span>
           </div>
         </div>
 
@@ -1451,7 +1545,7 @@ export default function ChatPage({ authToken }) {
             <div className="mhub-mini-progress">
               <span className="mhub-mini-time">{formatTime(audioCurrentTime)}</span>
               <input type="range" className="mhub-mini-bar" min="0" max="100" value={trackProgress} onChange={handleProgressChange} />
-              <span className="mhub-mini-time">{playingTrack.duration}</span>
+              <span className="mhub-mini-time">{audioRef.current?.duration && !isNaN(audioRef.current.duration) ? formatTime(audioRef.current.duration) : playingTrack.duration}</span>
             </div>
             <div className="mhub-mini-controls">
               <button className="mhub-mini-btn" onClick={handlePrevTrack}>⏮</button>
@@ -1477,6 +1571,103 @@ export default function ChatPage({ authToken }) {
         <div className="panel-header-section">
           <h2>💤 Unwind and Sleep</h2>
           <p>Drift into deep, refreshing sleep with ambient sounds and a soothing bedtime story.</p>
+        </div>
+
+        {/* ── UNWIND SOUNDBOARD MIXER ── */}
+        <div className="soundboard-mixer panel-card" style={{ marginBottom: '24px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
+            <div>
+              <h3>🎛️ Unwind Soundboard Mixer</h3>
+              <p className="card-sub" style={{ marginBottom: 0 }}>
+                Layer soothing rain, forest breezes, ocean waves, and brown noise to build your personal sleep sanctuary.
+              </p>
+            </div>
+            <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+              <button
+                className={`care-action-btn ${isMixerPlaying ? 'primary' : 'secondary'}`}
+                onClick={() => {
+                  if (!isMixerPlaying && rainVol === 0 && forestVol === 0 && oceanVol === 0 && whiteVol === 0) {
+                    setRainVol(40);
+                    setOceanVol(20);
+                  }
+                  setIsMixerPlaying(!isMixerPlaying);
+                }}
+                style={{ padding: '8px 18px', fontSize: '0.88rem' }}
+              >
+                {isMixerPlaying ? '⏸ Pause Mix' : '▶ Play Sleep Mix'}
+              </button>
+              <button
+                className="care-action-btn secondary"
+                onClick={handleMuteAllMixer}
+                title="Mute all channels"
+                style={{ padding: '8px 14px', fontSize: '0.88rem' }}
+              >
+                🔇 Mute All
+              </button>
+            </div>
+          </div>
+
+          <div className="mixer-grid">
+            {/* Rain Channel */}
+            <div className="mixer-channel" style={rainVol > 0 && isMixerPlaying ? { borderColor: 'rgba(56, 189, 248, 0.4)', boxShadow: '0 0 16px rgba(56, 189, 248, 0.15)' } : {}}>
+              <span className="mixer-icon">🌧️</span>
+              <span className="channel-name">Gentle Rain</span>
+              <input
+                type="range"
+                min="0"
+                max="100"
+                value={rainVol}
+                onChange={e => handleMixerVolChange('rain', e.target.value)}
+                aria-label="Rain volume"
+              />
+              <span className="channel-percent">{rainVol}%</span>
+            </div>
+
+            {/* Forest Channel */}
+            <div className="mixer-channel" style={forestVol > 0 && isMixerPlaying ? { borderColor: 'rgba(52, 211, 153, 0.4)', boxShadow: '0 0 16px rgba(52, 211, 153, 0.15)' } : {}}>
+              <span className="mixer-icon">🌲</span>
+              <span className="channel-name">Forest &amp; Breeze</span>
+              <input
+                type="range"
+                min="0"
+                max="100"
+                value={forestVol}
+                onChange={e => handleMixerVolChange('forest', e.target.value)}
+                aria-label="Forest volume"
+              />
+              <span className="channel-percent">{forestVol}%</span>
+            </div>
+
+            {/* Ocean Channel */}
+            <div className="mixer-channel" style={oceanVol > 0 && isMixerPlaying ? { borderColor: 'rgba(103, 232, 249, 0.4)', boxShadow: '0 0 16px rgba(103, 232, 249, 0.15)' } : {}}>
+              <span className="mixer-icon">🌊</span>
+              <span className="channel-name">Ocean Waves</span>
+              <input
+                type="range"
+                min="0"
+                max="100"
+                value={oceanVol}
+                onChange={e => handleMixerVolChange('ocean', e.target.value)}
+                aria-label="Ocean volume"
+              />
+              <span className="channel-percent">{oceanVol}%</span>
+            </div>
+
+            {/* White / Brown Noise Channel */}
+            <div className="mixer-channel" style={whiteVol > 0 && isMixerPlaying ? { borderColor: 'rgba(129, 140, 248, 0.4)', boxShadow: '0 0 16px rgba(129, 140, 248, 0.18)' } : {}}>
+              <span className="mixer-icon">📡</span>
+              <span className="channel-name">Deep Brown Noise</span>
+              <input
+                type="range"
+                min="0"
+                max="100"
+                value={whiteVol}
+                onChange={e => handleMixerVolChange('white', e.target.value)}
+                aria-label="Brown noise volume"
+              />
+              <span className="channel-percent">{whiteVol}%</span>
+            </div>
+          </div>
         </div>
 
         <div className="sleep-workspace">
@@ -1812,7 +2003,7 @@ export default function ChatPage({ authToken }) {
     <div className="chat-page-layout">
       <ChatSidebar activeTab={activeTab} setActiveTab={setActiveTab} />
       <div className="chat-page-main">
-        <ChatHeader />
+        <ChatHeader currentUser={currentUser} onLogout={onLogout} />
 
         {activeTab === 'chat' && (
           <>

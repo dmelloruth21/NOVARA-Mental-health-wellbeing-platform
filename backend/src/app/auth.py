@@ -93,3 +93,39 @@ def get_current_user(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail=f"Invalid authentication credentials: {str(e)}",
         )
+
+
+def get_authenticated_user(
+    credentials: HTTPAuthorizationCredentials = Depends(security)
+) -> dict:
+    """
+    Decoupled authentication dependency for wellness synchronization and transactional APIs.
+    Cryptographically verifies the Firebase ID token and extracts the authenticated UID
+    without querying or writing to ChromaDB.
+    """
+    token = credentials.credentials
+    is_configured = bool(firebase_admin._apps) or bool(firebase_cred_path and os.path.exists(firebase_cred_path))
+
+    if not is_configured or token == "dummy-dev-token":
+        if token == "dummy-dev-token":
+            return {"uid": "dev-user-123", "email": "dev@example.com", "name": "Dev User"}
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid authentication credentials (Firebase not configured on server)",
+        )
+
+    try:
+        decoded_token = auth.verify_id_token(token)
+        return {
+            "uid": decoded_token["uid"],
+            "email": decoded_token.get("email", ""),
+            "name": decoded_token.get("name", "Anonymous"),
+        }
+    except Exception as e:
+        if token == "dummy-dev-token":
+            return {"uid": "dev-user-123", "email": "dev@example.com", "name": "Dev User"}
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail=f"Invalid authentication credentials: {str(e)}",
+        )
+

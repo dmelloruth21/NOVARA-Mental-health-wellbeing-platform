@@ -14,6 +14,10 @@ backend/firebase-key.json
 
 # Database and Logs
 chroma_db/
+database/chroma_db/
+database/wellness_local/
+database/crisis_alerts.json
+*.db
 rag_reference_logs.jsonl
 
 # System Files

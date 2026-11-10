@@ -18,7 +18,9 @@ import uuid
 from typing import Optional
 
 from src.app.service import chat_logic
-from src.app.auth import get_current_user
+from src.app.auth import get_current_user, get_authenticated_user
+from src.app import wellness_service
+from src.app.wellness_service import SyncPushRequest, LegacyImportRequest
 from . import vector_db
 
 @asynccontextmanager
@@ -43,6 +45,19 @@ class OnboardingRequest(BaseModel):
 class ChatRequest(BaseModel):
     message: str
     session_id: Optional[str] = None # If None, creates a new session
+
+# ── LLM Pipeline & Health API ───────────────────────────────────────────
+@app.get("/api/llm/status")
+async def get_llm_status_endpoint():
+    """Returns the operational status of the LLM pipeline (mock vs live)."""
+    from src.app.llm_client import get_llm_status
+    return get_llm_status()
+
+@app.get("/api/llm/verify")
+async def verify_llm_auth_endpoint():
+    """Verifies Hugging Face credentials and returns detailed diagnostics."""
+    from src.app.llm_client import verify_hf_token
+    return verify_hf_token()
 
 # ── User API ──────────────────────────────────────────────────────────────
 @app.get("/api/user/profile")
@@ -119,6 +134,59 @@ async def chat(req: ChatRequest, user: dict = Depends(get_current_user)):
         import traceback
         traceback.print_exc()
         return JSONResponse(status_code=500, content={"error": str(exc)})
+
+
+# ── Wellness Cross-Device Synchronization Endpoints ────────────────────────
+
+@app.get("/api/wellness/sync")
+async def get_wellness_sync(
+    since_rev: int = 0,
+    cursor_id: Optional[str] = None,
+    limit: int = 500,
+    user: dict = Depends(get_authenticated_user),
+):
+    """
+    Pulls user wellness items (planner, quotes, gratitudes, tracks)
+    using composite cursor pagination (rev + doc_id).
+    """
+    return wellness_service.pull_sync(
+        uid=user["uid"],
+        since_rev=since_rev,
+        cursor_id=cursor_id,
+        limit=limit,
+    )
+
+
+@app.post("/api/wellness/sync")
+async def post_wellness_sync(
+    req: SyncPushRequest,
+    user: dict = Depends(get_authenticated_user),
+):
+    """
+    Applies incoming wellness mutations with Last-Write-Wins and request idempotency.
+    """
+    return wellness_service.push_sync(uid=user["uid"], req=req)
+
+
+@app.post("/api/wellness/legacy-import")
+async def post_legacy_import(
+    req: LegacyImportRequest,
+    user: dict = Depends(get_authenticated_user),
+):
+    """
+    One-time migration of unauthenticated browser localStorage items.
+    """
+    return wellness_service.legacy_import(uid=user["uid"], req=req)
+
+
+@app.delete("/api/wellness")
+async def delete_wellness(
+    user: dict = Depends(get_authenticated_user),
+):
+    """
+    Deletes all user wellness data and tombstones for privacy compliance.
+    """
+    return wellness_service.delete_all_wellness(uid=user["uid"])
 
 
 # ── Admin/Counselor Endpoints ──────────────────────────────────────────────

@@ -1314,7 +1314,8 @@
 }
 
 .mixer-channel {
-  background-color: rgba(0,0,0,0.15);
+  background-color: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 14px;
   padding: 20px;
   display: flex;
@@ -1322,6 +1323,12 @@
   align-items: center;
   text-align: center;
   gap: 10px;
+  transition: all 0.25s ease;
+}
+
+.mixer-channel:hover {
+  background-color: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.12);
 }
 
 .mixer-icon {

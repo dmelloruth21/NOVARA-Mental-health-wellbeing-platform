@@ -26,6 +26,7 @@ from src.app import logging as app_logging
 from src.rag import retriever, prompt_builder, router, safety, memory_extractor
 from src.rag.embeddings import get_embedding_function
 from src.app import vector_db as app_vector_db
+from src.app.llm_client import get_llm_client, get_llm_status, verify_hf_token
 
 from pathlib import Path
 root_env = Path(__file__).resolve().parents[3] / ".env"
@@ -33,7 +34,7 @@ load_dotenv(dotenv_path=root_env)
 
 # ── Config ────────────────────────────────────────────────────────────────────
 HF_TOKEN = os.getenv("HUGGINGFACE_TOKEN")
-MODEL_NAME = "Qwen/Qwen2.5-7B-Instruct"
+MODEL_NAME = os.getenv("HF_MODEL_NAME", "Qwen/Qwen2.5-7B-Instruct")
 DB_PATH = str((
     __import__("pathlib").Path(__file__).resolve().parents[3] / "database" / "chroma_db"
 ))
@@ -42,24 +43,19 @@ KNOWLEDGE_COLLECTION_NAME = "student_support_knowledge"
 
 
 def _ensure_hf_token() -> None:
-    if not HF_TOKEN:
-        raise RuntimeError(
-            "HUGGINGFACE_TOKEN is missing. Add it to a .env file before running."
-        )
+    """Soft check for Hugging Face token; logs notice instead of crashing."""
+    if not HF_TOKEN or HF_TOKEN.startswith("your_"):
+        print("ℹ️ [LLM] No valid HUGGINGFACE_TOKEN found. Operating in Offline Mock Mode.")
 
 
 # ── Lazy-loaded singletons ────────────────────────────────────────────────────
-_client: InferenceClient | None = None
 _empathy_col: chromadb.Collection | None = None
 _knowledge_col: chromadb.Collection | None = None
 
 
-def _get_client() -> InferenceClient:
-    global _client
-    if _client is None:
-        _ensure_hf_token()
-        _client = InferenceClient(model=MODEL_NAME, token=HF_TOKEN)
-    return _client
+def _get_client():
+    """Returns the resilient LLM client (live with auto-fallback or mock)."""
+    return get_llm_client()
 
 
 def _get_collections() -> tuple[chromadb.Collection, chromadb.Collection]:
@@ -201,7 +197,8 @@ def chat_logic(user_message: str, history: list, user_profile=None, today=None) 
             response.choices[0].message.content.split()
         )
     except Exception as exc:
-        return f"Model error: {exc}"
+        print(f"⚠️ [Service] Error during LLM generation: {exc}. Using empathetic fallback.")
+        ai_reply = "I'm right here with you 🫂. It sounds like things have been feeling heavy. Take a slow, gentle breath — I'm listening whenever you want to share."
 
     # ── Step 5: Post-generation safety check ─────────────────────────────────
     reply_safe, safety_issues = safety.check_post_generation(ai_reply)

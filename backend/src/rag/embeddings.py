@@ -15,7 +15,17 @@ def get_device() -> str:
     return "cpu"
 
 def get_embedding_function() -> embedding_functions.SentenceTransformerEmbeddingFunction:
-    return embedding_functions.SentenceTransformerEmbeddingFunction(
-        model_name=MODEL_NAME,
-        device=get_device(),
-    )
+    device = get_device()
+    try:
+        # Prefer offline local cached weights to prevent unnecessary network requests and timeouts
+        return embedding_functions.SentenceTransformerEmbeddingFunction(
+            model_name=MODEL_NAME,
+            device=device,
+            local_files_only=True,
+        )
+    except Exception:
+        # Fallback to online download if not cached yet
+        return embedding_functions.SentenceTransformerEmbeddingFunction(
+            model_name=MODEL_NAME,
+            device=device,
+        )
