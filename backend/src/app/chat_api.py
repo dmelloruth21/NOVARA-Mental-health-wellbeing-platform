@@ -209,16 +209,27 @@ async def resolve_alert(alert_id: str):
     return JSONResponse(status_code=404, content={"error": "Alert not found"})
 
 
-# Serve frontend/dist files
+# Serve frontend/dist files safely with containment check against path traversal
 @app.get("/{file_path:path}")
 async def serve_static(file_path: str):
-    # Try to serve specific file (like login-mockup.png)
-    full_path = _STATIC_DIR / file_path
-    if full_path.exists() and full_path.is_file():
-        return FileResponse(str(full_path))
+    try:
+        resolved_static = _STATIC_DIR.resolve()
+        requested_path = (_STATIC_DIR / file_path).resolve()
+        # Verify that requested path is strictly within the static directory
+        requested_path.relative_to(resolved_static)
+    except (ValueError, RuntimeError):
+        # Path traversal attack attempt outside of static root
+        raise HTTPException(status_code=403, detail="Access denied")
+
+    if requested_path.is_file():
+        return FileResponse(str(requested_path))
     
-    # Otherwise fallback to index.html (SPA support)
-    return FileResponse(str(_STATIC_DIR / "index.html"))
+    # Otherwise fallback to index.html (SPA client-side routing support)
+    index_file = resolved_static / "index.html"
+    if index_file.is_file():
+        return FileResponse(str(index_file))
+
+    raise HTTPException(status_code=404, detail="File not found")
 
 
 if __name__ == "__main__":
